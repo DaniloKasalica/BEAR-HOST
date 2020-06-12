@@ -2,8 +2,10 @@
 
 const user = {
      newuser :  async(req,res,next) =>{
-      
-        Promise.all([
+         
+        if(req.body.isactive)
+        return res.sendStatus(403);
+            Promise.all([
             passval(req.body.password),
             firstnameval(req.body.firstname),
             lastnameval(req.body.lastname)
@@ -11,7 +13,6 @@ const user = {
         ]).then(()=>{
             next();
         }).catch((err)=>{
-            
             res.status(400).send({error: err.message})
         })
     }

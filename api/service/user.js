@@ -42,7 +42,7 @@ FindByUsername: async(username)=>{
     return Promise.resolve(err)
   }
 },
-UpdateAdminStatus: async(ID,val)=>{
+UpdateActiveStatus: async(ID,val)=>{
   try{
   const sql = `UPDATE users SET IsActive = ${val} WHERE PersonID = ${ID }`
   const result = await Module.query(sql)
@@ -53,6 +53,7 @@ UpdateAdminStatus: async(ID,val)=>{
     return Promise.reject(err)
      }
 }
+
 }
 
 module.exports = user;

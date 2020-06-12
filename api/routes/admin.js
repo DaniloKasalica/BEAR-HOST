@@ -12,6 +12,9 @@ const auth  = require('../middleware/auth').authadmin;
 router.post('/login',auth.login,adminController.login)
 router.post('/token',adminController.refreshToken)
 router.post('/logout', adminController.logout)
-router.get('/security/:token',auth.authenticateTokenAdmin,adminController.login)
+
+
+
+router.get('/security/:token',auth.authenticateBlockToken,adminController.login)
 
 module.exports = router;

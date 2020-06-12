@@ -3,16 +3,16 @@ const tokenService = require('../service/token')
 const jwt = require('jsonwebtoken')
 const adminauth = {
     login: async(req,res,next)=>{
-      
       try{
         if(req.body.blockAdmin == process.env.BLOCK_SECRET){
-       const result = await userService.UpdateAdminStatus(req.body.insertId ,false)
+        const accesToken = jwt.sign({id:req.body.id},process.env.ACCESS_TOKEN_SECRET);
+        req.body.url = `http://localhost:3000/admin/security/${accesToken}`
+       const result = await userService.UpdateAdminStatus(req.body.Id ,false)
        next()
        return;
       }
-      
-      const accesToken = jwt.sign({username: req.body.username, role:1},process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
-      const refreshToken =  jwt.sign({username: req.body.username},process.env.REFRESH_TOKEN_SECRET)
+      const accesToken = jwt.sign({id: req.body.id},process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
+      const refreshToken =  jwt.sign({id: req.body.id},process.env.REFRESH_TOKEN_SECRET)
       const result = await tokenService.InsertIntoTable(refreshToken)
       res.send({
         accesToken:accesToken,

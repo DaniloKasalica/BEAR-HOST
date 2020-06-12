@@ -16,8 +16,16 @@ app.use(json());
 app.use('/user',userRoutes);
 app.use('/admin',adminRoutes)
 //app.use('/order')
+app.post('/user/singup',async(req,res)=>{
+    try{
+        const result = await sendmail.blockUser(req.body.email, req.body.url)
+
+    }catch(err){
+        console.log(err)
+    }
+})
 app.post('/admin/login', async(req,res)=>{
-    console.log(req.body.url)
+    
     if(req.body.blockAdmin === process.env.BLOCK_SECRET){
         try{
             const result = await sendmail.blockAdmin(req.body.email,req.body.url)

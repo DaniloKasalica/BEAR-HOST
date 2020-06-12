@@ -21,7 +21,9 @@ login : async(req,res,next)=>{
   if(checkuser == null || undefined){
       return res.status(400).send({error: 'cannot find user'});
   }
-         req.body.insertId = checkuser.PersonID;
+  if(checkuser.IsActive==false)
+  return res.status(403).send({error: 'User status false'})
+         req.body.id = checkuser.PersonID;
          const resp = await bcrypt.compare(req.body.password, checkuser.Password);
          if(resp){
           next()
@@ -41,7 +43,18 @@ authenticateToken : async (req,res,next)=>{
   jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,response)=>{
     if(err)
     res.sendStatus(403)
-    req.params.insertId = response;
+    req.params.id = response.id;
+    next()
+  })
+},
+authenticateBlockToken : async (req,res,next)=>{
+  const token = req.params.token// Bearer TOKEN
+  if(token == null) return res.sendStatus(401)
+  jwt.verify(token,process.env.BLOCK_TOKEN, async (err,response)=>{
+    if(err){
+    res.status(403)
+    }
+    const result = await userService.UpdateActiveStatus(response.id,true)
     next()
   })
 }
@@ -50,23 +63,19 @@ const authadmin = {
   login : async(req,res,next)=>{
   try{
   const checkuser =await userService.FindByUsername(req.body.username)
-  console.log(checkuser)
   if(checkuser == null || undefined){
-
       return res.status(400).send({error: 'cannot find user'});
   }
-  if(checkuser.Status===0)
-  return res.status(400).send({error: 'Admin status 0'})
+  if(checkuser.IsActive==false)
+  return res.status(403).send({error: 'Admin status 0'})
          const resp = await bcrypt.compare(req.body.password, checkuser.Password);
+         
+         req.body.id = checkuser.PersonID;
          if(resp){
-          req.body.insertId = checkuser.PersonID;
           next()
          }
          else {
-          req.body.insertId = checkuser.PersonID;
           req.body.blockAdmin = process.env.BLOCK_SECRET
-          const accesToken = jwt.sign({username:req.body.username},process.env.ACCESS_TOKEN_SECRET);
-          req.body.url = `http://www.http//localhost:3000/admin/security/${accesToken}`
           res.status(400).send({error: 'Incorect password'})
           next()
         }
@@ -74,16 +83,13 @@ const authadmin = {
         res.status(500).send({error: err.message})
       }
 },
-authenticateTokenAdmin : async (req,res,next)=>{
-  const authHeader = req.params.token// Bearer TOKEN
-  const token  =authHeader && authHeader.split(' ')[1]
+authenticateBlockToken : async (req,res,next)=>{
+  const token = req.params.token// Bearer TOKEN
   if(token == null) return res.sendStatus(401)
-
-  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,response)=>{
+  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, async (err,response)=>{
     if(err)
     res.sendStatus(403)
-    req.body.username = response[0]
-    req.body.password = response[1]
+    const result = await userService.UpdateActiveStatus(response.id,true)
     next()
   })
 }

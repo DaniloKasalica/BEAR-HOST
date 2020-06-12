@@ -35,7 +35,15 @@ const transporter = nodemailer.createTransport({
        this.subject = 'SECURITY';
    };
  };
-
+    class mailOptionsobjBlocUser {
+     
+  constructor(mail,accestoken){
+      this.to = mail;
+      this.html = `<h1>Please comfirmirm your acount<h1><a href =${accestoken}>Click here</a>`;
+      this.from = 'danilo.kasalica@gmail.com';
+      this.subject = 'SECURITY';
+  };
+};
  const writecsvfile = async (doc)=>{
    const csv = new ObjectsToCsv([doc]);
    return  await csv.toDisk(__dirname+'/order.csv')
@@ -66,7 +74,16 @@ const blockAdmin = (email,url) =>{
          return Promise.resolve(info)
      })
 }
+const blockUser = (email,url)=>{
+  const mailOptions = new mailOptionsobjBlocUser(email,url)
+  transporter.sendMail(mailOptions,(err,info)=>{
+    if(err)
+    return Promise.reject(err)
+    return Promise.resolve(info)
+  })
+}
 module.exports = {
+   blockUser,
    newprodinfo,
    blockAdmin
 }
