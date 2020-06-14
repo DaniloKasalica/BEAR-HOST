@@ -8,7 +8,7 @@ const validation = require('../middleware/validation');
 const auth  = require('../middleware/auth').authuser;
 
 
-router.post('/singup',validation.newuser , auth.encpassword, userController.adduser);
+router.post('/signup',validation.newuser , auth.encpassword, userController.adduser);
 router.get('/security/:token',auth.authenticateBlockToken,userController.login) //usmjeriti na log in stranicu ili automatski ulogovati
 
 

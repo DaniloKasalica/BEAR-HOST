@@ -18,8 +18,8 @@ encpassword : async function (req,res,next){
 login : async(req,res,next)=>{
   try{
   const checkuser =await userService.FindByEmail(req.body.email)
-  if(checkuser == null || undefined){
-      return res.status(400).send({error: 'cannot find user'});
+  if(checkuser == null ){
+   return res.status(400).send({error: 'cannot find user'});
   }
   if(checkuser.IsActive==false)
   return res.status(403).send({error: 'User status false'})
@@ -40,7 +40,7 @@ authenticateToken : async (req,res,next)=>{
   const token  =authHeader && authHeader.split(' ')[1]
   if(token == null) return res.sendStatus(401)
 
-  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,response)=>{
+  jwt.verify(token,process.env.ACCESS_TOKEN_USER, (err,response)=>{
     if(err)
     res.sendStatus(403)
     req.params.id = response.id;
@@ -63,11 +63,13 @@ const authadmin = {
   login : async(req,res,next)=>{
   try{
   const checkuser =await userService.FindByUsername(req.body.username)
-  if(checkuser == null || undefined){
-      return res.status(400).send({error: 'cannot find user'});
-  }
+  console.log(checkuser)
+  if(checkuser == null)
+   res.status(400).send({error: 'cannot find user'});
+  if(checkuser.Role !==1)
+  res.status(403).send({error: 'ROLE: 0'})
   if(checkuser.IsActive==false)
-  return res.status(403).send({error: 'Admin status 0'})
+  res.status(403).send({error: 'Admin status 0'})
          const resp = await bcrypt.compare(req.body.password, checkuser.Password);
          
          req.body.id = checkuser.PersonID;
@@ -86,10 +88,22 @@ const authadmin = {
 authenticateBlockToken : async (req,res,next)=>{
   const token = req.params.token// Bearer TOKEN
   if(token == null) return res.sendStatus(401)
-  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, async (err,response)=>{
-    if(err)
+  jwt.verify(token,process.env.ACCESS_TOKEN_ADMIN, async (err,response)=>{
+    if(err || response.role !== 1)
     res.sendStatus(403)
     const result = await userService.UpdateActiveStatus(response.id,true)
+    next()
+  })
+},
+authenticateToken : async (req,res,next)=>{
+  const authHeader = req.headers['authorization']// Bearer TOKEN
+  const token  =authHeader && authHeader.split(' ')[1]
+  if(token == null) return res.sendStatus(401)
+
+  jwt.verify(token,process.env.ACCESS_TOKEN_ADMIN, (err,response)=>{
+    if(err || response.role !== 1)
+    res.sendStatus(403)
+    req.params.id = response.id;
     next()
   })
 }

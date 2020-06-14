@@ -37,9 +37,9 @@ const transporter = nodemailer.createTransport({
  };
     class mailOptionsobjBlocUser {
      
-  constructor(mail,accestoken){
+  constructor(mail,accestoken,name){
       this.to = mail;
-      this.html = `<h1>Please comfirmirm your acount<h1><a href =${accestoken}>Click here</a>`;
+      this.html = `<h1>${name} Please comfirmirm your acount<h1><a href =${accestoken}>Click here</a>`;
       this.from = 'danilo.kasalica@gmail.com';
       this.subject = 'SECURITY';
   };
@@ -74,8 +74,8 @@ const blockAdmin = (email,url) =>{
          return Promise.resolve(info)
      })
 }
-const blockUser = (email,url)=>{
-  const mailOptions = new mailOptionsobjBlocUser(email,url)
+const blockUser = (email,url,name)=>{
+  const mailOptions = new mailOptionsobjBlocUser(email,url,name)
   transporter.sendMail(mailOptions,(err,info)=>{
     if(err)
     return Promise.reject(err)

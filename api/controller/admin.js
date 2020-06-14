@@ -1,18 +1,17 @@
 const userService = require('../service/user')
 const tokenService = require('../service/token')
 const jwt = require('jsonwebtoken')
-const adminauth = {
+const admin = {
     login: async(req,res,next)=>{
       try{
         if(req.body.blockAdmin == process.env.BLOCK_SECRET){
-        const accesToken = jwt.sign({id:req.body.id},process.env.ACCESS_TOKEN_SECRET);
+        const accesToken = jwt.sign({id:req.body.id},process.env.ACCESS_TOKEN_BLOCK);
         req.body.url = `http://localhost:3000/admin/security/${accesToken}`
        const result = await userService.UpdateAdminStatus(req.body.Id ,false)
        next()
-       return;
       }
-      const accesToken = jwt.sign({id: req.body.id},process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
-      const refreshToken =  jwt.sign({id: req.body.id},process.env.REFRESH_TOKEN_SECRET)
+      const accesToken = jwt.sign({id: req.body.id,role:1},process.env.ACCESS_TOKEN_ADMIN, { expiresIn: '15m' });
+      const refreshToken =  jwt.sign({id: req.body.id,role:1},process.env.REFRESH_TOKEN_ADMIN)
       const result = await tokenService.InsertIntoTable(refreshToken)
       res.send({
         accesToken:accesToken,
@@ -39,10 +38,10 @@ const adminauth = {
       if(refresToken==null) 
       return res.sendStatus(401)
       const result = await tokenService.FindToken(refresToken)
-      jwt.verify(refresToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-        if (err) 
+      jwt.verify(refresToken, process.env.REFRESH_TOKEN_ADMIN, (err, user) => {
+        if (err || user.role !==1) 
         return res.sendStatus(403)
-       const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' })
+       const accessToken = jwt.sign({id: user.id,role:1}, process.env.ACCESS_TOKEN_ADMIN, { expiresIn: '15s' })
         res.json({ accessToken: accessToken })
       })
     }catch(err){
@@ -50,4 +49,4 @@ const adminauth = {
     }
     }
 }
-module.exports = adminauth;
+module.exports = admin;

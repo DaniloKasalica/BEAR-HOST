@@ -17,8 +17,8 @@ const user = {
     },
     login: async(req,res)=>{
       try{
-      const accesToken = jwt.sign({id:req.body.id},process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
-      const refreshToken =  jwt.sign({id:req.body.id},process.env.REFRESH_TOKEN_SECRET)
+      const accesToken = jwt.sign({id:req.body.id},process.env.ACCESS_TOKEN_USER, { expiresIn: '10m' });
+      const refreshToken =  jwt.sign({id:req.body.id},process.env.REFRESH_TOKEN_USER)
       const result = await tokenService.InsertIntoTable(refreshToken)
       res.send({
         accesToken:accesToken,
@@ -45,10 +45,10 @@ const user = {
       if(refresToken==null) 
       return res.sendStatus(401)
       const result = await tokenService.FindToken(refresToken)
-      jwt.verify(refresToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+      jwt.verify(refresToken, process.env.REFRESH_TOKEN_USER, (err, user) => {
         if (err) 
         return res.sendStatus(403)
-       const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' })
+       const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_USER, { expiresIn: '15s' })
         res.json({ accessToken: accessToken })
       })
     }catch(err){
