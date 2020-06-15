@@ -2,7 +2,7 @@ const Module = require('../model/model')
 
 
 const product = {
-  InsertIntoTable: async (arr) =>{
+  InsertIntoTable: async (doc) =>{
 try{
   const sql= `
   INSERT INTO Products (
@@ -11,12 +11,14 @@ try{
   Price_1, Price_2, Price_3,
   Description_1,Value_1,
   Description_2,Value_2,
-  Description_3,Value_3
+  Description_3,Value_3,
   Description_4,Value_4,
   Description_5,Value_5,
-  Description_price) ?
+  Description_price) VALUES ?
   `
-   const person = [[prodname,parname,price1,price2,price3,des1,val1,des2,val2,des3,val3,des4,val4,des5,val5,pricedes]];
+   const person = [[doc.productname,doc.parentname,doc.price1,doc.price2,doc.price3,
+                   doc.description1,doc.value1,doc.description2,doc.value2,doc.description3,doc.value3,
+                   doc.description4,doc.value4,doc.description5,doc.value5,doc.pricedescription]];
    const result =  await Module.query(sql,[person])
 
   return Promise.resolve(result)
@@ -85,32 +87,19 @@ try{
        comma = ','
        }
       sql += `WHERE ProductName = '${name}'`
-   console.log(sql)
    const result = await Module.query(sql)
    return Promise.resolve(result)
    }catch(err){
-     console.log(err)
      return Promise.reject(err)
    }
  },
-FindbyID: async(Id)=>{
+FindProductsByTip: async(parentname)=>{
   try{
-    const sql = `SELECT * FROM Products WHERE ${Id} = ProductID`
+    const sql = `SELECT * FROM Products WHERE  '${parentname}' = ParentName `
     const result = await Module.query(sql)
     return Promise.resolve(result)
   }catch(err){
     return Promise.reject(err)
-  }
-},
-Update: async(id, firstcol, secondcol, thirdcol, fourthcol)=>{
-  try{
-    const sql = `UPDATE Products SET firstcol = '${firstcol}' SET secondtcol = '${secondcol}'
-                 SET thirdcol = '${thirdcol}' SET fourthcol = '${fourthcol}'
-                 WHERE ProductID = ${id}`;
-    const result  = await Module.query(sql);
-    return Promise.resolve (result)
-  }catch(err){
-    return Promise.rejecet(err)
   }
 }
 }
