@@ -6,6 +6,7 @@ const user = {
     adduser: async(req,res,next)=>{
        
        try{
+         console.log('controller')
       const person = await userService.InsertIntoTable(req.body.username,req.body.lastname,false, req.body.firstname, req.body.email, req.body.password);
       blockToken = jwt.sign({id:person.insertId},process.env.BLOCK_TOKEN, { expiresIn: '1d' });
       req.body.url = `http://localhost:3000/user/security/${blockToken}`

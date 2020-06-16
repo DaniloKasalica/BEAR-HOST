@@ -19,8 +19,20 @@ try{
 },
 FindMarketingProducts: async()=>{
   try{
-    const sql = `SELECT * FROM Marketing`
-    const result = await Module.query(sql)
+    const sql = `CREATE TEMPORARY TABLE t
+    SELECT MIN(Price_1) as price,
+    ParentName, firstcol,secondcol,thirdcol
+    FROM products
+    JOIN marketing ON products.ParentName = marketing.Name
+    GROUP BY ParentName;`
+    const sql2 = `SELECT products.ParentName as parentname,products.Description_price as descriptionprice, t.price, t.firstcol,t.secondcol,t.thirdcol  
+    FROM products, t 
+    WHERE price_1 = t.price 
+    GROUP BY ParentName;`
+    const sql3 = `DROP TABLE t`
+     await Module.query(sql)
+    const result =  await Module.query(sql2)
+     await Module.query(sql3)
     return Promise.resolve(result)
   }catch(err){
     return Promise.reject(err)

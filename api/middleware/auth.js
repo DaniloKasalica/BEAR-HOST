@@ -17,7 +17,7 @@ encpassword : async function (req,res,next){
 },
 login : async(req,res,next)=>{
   try{
-  const checkuser =await userService.FindByEmail(req.body.email)
+  const checkuser =await userService.FindByUsername(req.body.username)
   if(checkuser == null ){
    return res.status(400).send({error: 'cannot find user'});
   }

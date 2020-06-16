@@ -9,17 +9,19 @@ const sql = require("./db.js")
     );`
   
     const createtablemarketing = `CREATE TABLE IF NOT EXISTS Marketing (
-      Name varchar(255),
+      MarketingID int(11) NOT NULL auto_increment,
+      Name varchar(255) ,
       Firstcol varchar(255),
       Secondcol varchar(255),
       Thirdcol varchar(255),
-      PRIMARY KEY (Name)
+      UNIQUE INDEX (Name),
+      PRIMARY KEY (MarketingID)
     );`
 
     const createtableproducts = `CREATE TABLE IF NOT EXISTS Products  (
       ProductID int(11) NOT NULL auto_increment,
-      ProductName varchar(255),
-      ParentName varchar(255),
+      ProductName varchar(255) NOT NULL,
+      MarketingID int(11) NOT NULL,
       Price_1 int(4),
       Price_2 int(4),
       Price_3 int(4),
@@ -34,43 +36,65 @@ const sql = require("./db.js")
       Value_4 varchar(255),
       Description_5 varchar(255),
       Value_5 varchar(255),
-      PRIMARY KEY (ProductID,ProductName),
-      FOREIGN KEY (ParentName) REFERENCES Marketing (Name)
+      PRIMARY KEY (ProductID),
+      UNIQUE INDEX (ProductName),
+      FOREIGN KEY (MarketingID) REFERENCES Marketing (MarketingID)
     );`
 
     const createtableuser = `CREATE TABLE IF NOT EXISTS Users  (
-       PersonID int(11) NOT NULL auto_increment,
-       Username varchar(255) NOT NULL,
-       LastName varchar(255),
-       IsActive BOOLEAN,
-       FirstName varchar(255),
-       Email varchar(255),
-       Password varchar(255),
-       Role BOOLEAN DEFAULT false,
-       PRIMARY KEY (PersonID,Username) 
-       )`
-       
-       createtabletoken 
+      UserID int(11) NOT NULL auto_increment,
+      Username varchar(255) NOT NULL,
+      LastName varchar(255),
+      IsActive BOOLEAN,
+      FirstName varchar(255),
+      Email varchar(255) NOT NULL UNIQUE,
+      Password varchar(255),
+      Role BOOLEAN DEFAULT false,
+      PRIMARY KEY (UserID),
+      UNIQUE INDEX (Username) 
+      )`
+       const createtableorder = `CREATE TABLE IF NOT EXISTS Orders(
+        OrderID int(11) NOT NULL auto_increment,
+        UserID int(11),
+        OrderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (OrderID),
+        FOREIGN KEY (UserID) REFERENCES Users(UserID)
+      )`
+      const createtableproductorder = `CREATE TABLE IF NOT EXISTS Order_Products(
+        OrderProductID int(11) NOT NULL auto_increment,
+        OrderID int(11) NOT NULL,
+        ProductID int(11)  NOT NULL,
+        PricePacket int(1) NOT NULL,
+		    PRIMARY KEY (OrderProductID),
+        FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+        FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+      )`//PricePacket- koje od 3 kolone za cijenu je izabrao 
        sql.query(createtableuser, (err,data)=>{
         if(err)
         console.log(err)
         console.log(data)
       })
-      sql.query(createtableproducts, (err,data)=>{
-       if(err)
-       console.log(err)
-       console.log(data)
-     })
       sql.query(createtablemarketing, (err,data)=>{
       if(err)
       console.log(err)
       console.log(data)
     })
-      sql.query(createtableuser, (err,data)=>{
-     if(err)
-     console.log(err)
-     console.log(data)
-   })
+    
+      sql.query(createtableproducts, (err,data)=>{
+       if(err)
+       console.log(err)
+       console.log(data)
+     })
+    sql.query(createtableorder, (err,data)=>{
+      if(err)
+      console.log(err)
+      console.log(data)
+    })
+    sql.query(createtableproductorder, (err,data)=>{
+      if(err)
+      console.log(err)
+      console.log(data)
+    })
    sql.query( createtabletoken , (err,data)=>{
     if(err)
     console.log(err)

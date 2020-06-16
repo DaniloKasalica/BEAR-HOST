@@ -1,14 +1,12 @@
-
-
+const userService = require('../service/user')
 const user = {
      newuser :  async(req,res,next) =>{
-         
-        if(req.body.isactive)
-        return res.sendStatus(403);
             Promise.all([
             passval(req.body.password),
             firstnameval(req.body.firstname),
-            lastnameval(req.body.lastname)
+            lastnameval(req.body.lastname),
+            usernameval(req.body.username),
+            emailval(req.body.email)
 
         ]).then(()=>{
             next();
@@ -17,7 +15,22 @@ const user = {
         })
     }
 }
-
+const emailval = async (email)=>{
+    if(email == undefined)
+    return Promise.reject(new Error('email is required'))
+    const result = await userService.FindByEmail(email)
+    if(result)
+    return Promise.reject(new Error('email exist'))
+    return Promise.resolve(true)
+}
+const usernameval = async(username)=>{
+    if(username == undefined)
+    return Promise.reject(new Error('username is required'))
+    const result = await userService.FindByUsername(username)
+    if(result)
+    return Promise.reject(new Error('username exist'))
+    return Promise.resolve(true)
+}
 const firstnameval = (firstname)=>{
     if(firstname == undefined)
     return Promise.reject(new Error('firstname is required'))
