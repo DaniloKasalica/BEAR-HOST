@@ -93,10 +93,13 @@ try{
      return Promise.reject(err)
    }
  },
+
 FindProductsByTip: async(parentname)=>{
   try{
-    const sql = `SELECT * FROM Products WHERE  '${parentname}' = ParentName `
-    const result = await Module.query(sql)
+    const sql1 = `SELECT MarketingID as ID  FROM  Marketing WHERE  '${parentname}' = Name`;
+    const result1 = await Module.query(sql1);
+    const sql2 = `SELECT *  FROM Products WHERE '${result1[0].ID}' = MarketingID `
+    const result = await Module.query(sql2)
     return Promise.resolve(result)
   }catch(err){
     return Promise.reject(err)

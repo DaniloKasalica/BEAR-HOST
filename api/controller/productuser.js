@@ -3,9 +3,9 @@ const tokenService = require('../service/token')
 const marketingServic = require('../service/marketing')
 const jwt = require('jsonwebtoken')
 const product = {
-    FindProductsByParentName: async(req,res)=>{
+    FindProductsByMarketingName: async(req,res)=>{
         try{
-     const result = await  productService.FindProductsByTip(req.params.parentname)
+     const result = await  productService.FindProductsByTip(req.params.marketingname)
      res.status(200).send(result)
         }catch(err){
          res.status(400).send({error: err.message})

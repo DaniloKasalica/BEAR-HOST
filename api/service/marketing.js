@@ -21,14 +21,14 @@ FindMarketingProducts: async()=>{
   try{
     const sql = `CREATE TEMPORARY TABLE t
     SELECT MIN(Price_1) as price,
-    ParentName, firstcol,secondcol,thirdcol
+    Name, firstcol,secondcol,thirdcol
     FROM products
-    JOIN marketing ON products.ParentName = marketing.Name
-    GROUP BY ParentName;`
-    const sql2 = `SELECT products.ParentName as parentname,products.Description_price as descriptionprice, t.price, t.firstcol,t.secondcol,t.thirdcol  
+    JOIN marketing ON products.MarketingID = marketing.MarketingID
+    GROUP BY Name;`
+    const sql2 = `SELECT t.Name as Name,products.Description_price as descriptionprice, t.price, t.firstcol,t.secondcol,t.thirdcol  
     FROM products, t 
     WHERE price_1 = t.price 
-    GROUP BY ParentName;`
+    GROUP BY Name;`
     const sql3 = `DROP TABLE t`
      await Module.query(sql)
     const result =  await Module.query(sql2)
@@ -42,18 +42,19 @@ UpdateByName: async(name,doc)=>{
   try{
     let sql = `UPDATE Products
      SET`
+     let comma = ''
       if(firstcol){
      sql+=comma+`firstcol = '${doc.firstcol}'`
      comma = ','}
-     if(firstcol){
+    if(firstcol){
     sql+=comma+`firstcol = '${doc.firstcol}'`
     comma = ','}
     if(firstcol){
-   sql+=comma+`firstcol = '${doc.firstcol}'`
-   comma = ','}
-   if(firstcol){
-  sql+=comma+`firstcol = '${doc.firstcol}'`
-  comma = ','}
+    sql+=comma+`firstcol = '${doc.firstcol}'`
+    comma = ','}
+    if(firstcol){
+    sql+=comma+`firstcol = '${doc.firstcol}'`
+    comma = ','}
    sql+= ` WHERE Name = ${name}`;
     const result  = await Module.query(sql);
     return Promise.resolve (result)

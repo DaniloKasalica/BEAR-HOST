@@ -7,9 +7,13 @@ const userService = require('../service/user');
 const authuser = {
 encpassword : async function (req,res,next){
     try {
+      if(req.body.password){
     const password = await bcrypt.hash(req.body.password, 10);
     req.body.password = password;
     next()
+      }else{
+      next()
+      }
     }
     catch(err){
         res.status(500).send({error: err.message})
@@ -23,7 +27,7 @@ login : async(req,res,next)=>{
   }
   if(checkuser.IsActive==false)
   return res.status(403).send({error: 'User status false'})
-         req.body.id = checkuser.PersonID;
+         req.body.id = checkuser.UserID;
          const resp = await bcrypt.compare(req.body.password, checkuser.Password);
          if(resp){
           next()
@@ -63,7 +67,6 @@ const authadmin = {
   login : async(req,res,next)=>{
   try{
   const checkuser =await userService.FindByUsername(req.body.username)
-  console.log(checkuser)
   if(checkuser == null)
    res.status(400).send({error: 'cannot find user'});
   if(checkuser.Role !==1)
@@ -72,7 +75,7 @@ const authadmin = {
   res.status(403).send({error: 'Admin status 0'})
          const resp = await bcrypt.compare(req.body.password, checkuser.Password);
          
-         req.body.id = checkuser.PersonID;
+         req.body.id = checkuser.UserID;
          if(resp){
           next()
          }

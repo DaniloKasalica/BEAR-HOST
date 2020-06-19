@@ -18,7 +18,7 @@ FindByInsertId: async(insertId)=>{
   try{
     const sql = `SELECT * FROM Users WHERE ${insertId} = PersonID`
     const result = await Module.query(sql)
-    return Promise.resolve(result)
+    return Promise.resolve(result[0])
   }catch(err){
     return Promise.reject(err)
   }
@@ -42,18 +42,41 @@ FindByUsername: async(username)=>{
     return Promise.resolve(err)
   }
 },
+UpdateByID: async(id,doc)=>{
+  try{
+    let sql = `UPDATE Users
+     SET `
+     let comma = ''
+    if(doc.username){
+    sql+=comma+`username = '${doc.username}'`
+    comma = ','}
+    if(doc.firstname){
+    sql+=comma+`FirstName = '${doc.firstname}'`
+    comma = ','}
+    if(doc.lastname){
+    sql+=comma+`lastname = '${doc.lastname}'`
+    comma = ','}
+    if(doc.password){
+    sql+=comma+`password = '${doc.password}'`
+    comma = ','}
+   sql+= ` WHERE UserID = ${id}`;
+    const result  = await Module.query(sql);
+    return Promise.resolve (result)
+  }catch(err){
+    return Promise.rejecet(err)
+  }
+},
 UpdateActiveStatus: async(ID,val)=>{
   try{
   const sql = `UPDATE users SET IsActive = ${val} WHERE PersonID = ${ID }`
   const result = await Module.query(sql)
   if(result.affectedRows===0)
-  throw new Error('cann not find admin username')
+  throw new Error('can not find admin username')
   return Promise.resolve(true)
   }catch(err){
     return Promise.reject(err)
      }
 }
-
 }
 
 module.exports = user;

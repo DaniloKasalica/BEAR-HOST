@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-//const productController = require('../controller/product');
+const orderController = require('../controller/order');
 const validation = require('../middleware/validation');
-const auth  = require('../middleware/auth');
+const auth  = require('../middleware/auth').authuser;
 
-router.post('/',auth.authenticateToken)
+router.post('/',auth.authenticateToken,orderController.AddNewOrder)
 
 
 module.exports = router

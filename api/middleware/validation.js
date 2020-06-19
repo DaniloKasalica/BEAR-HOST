@@ -13,6 +13,21 @@ const user = {
         }).catch((err)=>{
             res.status(400).send({error: err.message})
         })
+    },
+    updateuser: async(req,res,next) =>{
+        try{
+        if(req.body.password){
+        await passval(req.body.password)
+        }
+        if(req.body.username){
+        await usernameval(req.body.username)
+        }
+        if(req.body.email)
+        await emailval(req.body.email)
+        next()
+        }catch(err){
+           return res.status(400).send({error:err.message})
+        }
     }
 }
 const emailval = async (email)=>{
@@ -67,6 +82,6 @@ const includenum = (password)=>{
              return null
          }
          }
-         return true
+         return null
      }
- module.exports= user;
+ module.exports = user;

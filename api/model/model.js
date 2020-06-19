@@ -69,6 +69,13 @@ const sql = require("./db.js")
         FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
         FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
       )`//PricePacket- koje od 3 kolone za cijenu je izabrao 
+      const createvieworder = `CREATE VIEW  Orders_View
+      AS
+      SELECT orders.OrderID,orders.UserID,OrderTime,ProductID,Pricepacket,email
+      FROM Orders 
+      JOIN order_products ON orders.OrderID = order_products.OrderID
+      JOIN users ON orders.UserID = users.UserID
+      `
        sql.query(createtableuser, (err,data)=>{
         if(err)
         console.log(err)
@@ -101,7 +108,11 @@ const sql = require("./db.js")
     console.log(data)
   })
  
-  
+  sql.query(createvieworder,(err,data)=>{
+    if(err)
+    console.log(err)
+    console.log(data)
+  })
    
     
   const  Module = {}

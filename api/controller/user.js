@@ -3,10 +3,9 @@ const userService = require('../service/user')
 const tokenService = require('../service/token')
 const jwt = require('jsonwebtoken')
 const user = {
-    adduser: async(req,res,next)=>{
+    AddUser: async(req,res,next)=>{
        
        try{
-         console.log('controller')
       const person = await userService.InsertIntoTable(req.body.username,req.body.lastname,false, req.body.firstname, req.body.email, req.body.password);
       blockToken = jwt.sign({id:person.insertId},process.env.BLOCK_TOKEN, { expiresIn: '1d' });
       req.body.url = `http://localhost:3000/user/security/${blockToken}`
@@ -18,6 +17,7 @@ const user = {
     },
     login: async(req,res)=>{
       try{
+        console.log(req.body.id)
       const accesToken = jwt.sign({id:req.body.id},process.env.ACCESS_TOKEN_USER, { expiresIn: '10m' });
       const refreshToken =  jwt.sign({id:req.body.id},process.env.REFRESH_TOKEN_USER)
       const result = await tokenService.InsertIntoTable(refreshToken)
@@ -49,12 +49,36 @@ const user = {
       jwt.verify(refresToken, process.env.REFRESH_TOKEN_USER, (err, user) => {
         if (err) 
         return res.sendStatus(403)
-       const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_USER, { expiresIn: '15s' })
+       const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_USER, { expiresIn: '20m' })
         res.json({ accessToken: accessToken })
       })
     }catch(err){
       res.status(400).send({error:err.message})
     }
+    },
+    UpdateUser: async(req,res)=>{
+      try{
+        const result = await userService.UpdateByID(req.params.id,req.body)
+        res.sendStatus(201)
+      }catch(err){
+        console.log(err)
+        res.status(400).send({error:err.message})
+      }
+    },
+    RessetPasswordRequest: async(req,res,next)=>{
+      try{
+      const result = await userService.FindByEmail(req.body.email)
+      token =  jwt.sign({id:result.UserID},process.env.REFRESH_TOKEN_USER)
+      const result1 = await tokenService.InsertIntoTable(refreshToken)
+      req.body.url = `http://localhost:3000/user/security/resetpassword/${token}`
+      next()
+      }catch(err){
+        res.sendStatus(400)
+      }
+    },
+    RessetPassword: async(req,res)=>{
+      const refreshtoken = req.params.tok
     }
+    
 }
 module.exports = user;
