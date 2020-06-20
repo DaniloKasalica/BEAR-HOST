@@ -12,4 +12,4 @@ router.get('/marketing',productController.FindMarketingProducts)
 router.get('/:marketingID',productController.FindProductsByMarketingID)
 
 
-module.exports= router
+module.exports = router

@@ -2,7 +2,7 @@ const Module = require('../model/model')
 
 
 const marketing = {
-  InsertIntoTable: async (doc) =>{
+  InsertIntoTable: async (doc,PacketID) =>{
 try{
   const sql= `
   INSERT INTO Marketing (
@@ -11,7 +11,7 @@ try{
   Description_2,
   PacketID) VALUES ?
   `
-   const result =  await Module.query(sql,[[[doc.name,doc.firstcol,doc.secondcol,doc.thirdcol]]])
+   const result =  await Module.query(sql,[[[doc.title,doc.description1,doc.description2,PacketID]]])
   return Promise.resolve(result)
    }catch(err){
      return Promise.reject(err)
@@ -39,25 +39,25 @@ FindMarketingProducts: async()=>{
     return Promise.reject(err)
   }
 },
-UpdateByName: async(name,doc)=>{
+UpdateMarketingByID: async(ID,doc)=>{
   try{
-    let sql = `UPDATE Products
-     SET`
+    let sql = `UPDATE Marketing
+     SET `
      let comma = ''
-      if(title){
-     sql+=comma+`title = '${doc.Title}'`
+      if(doc.title){
+     sql+=comma+`title = '${doc.title}' `
      comma = ','}
-    if(description_1){
-    sql+=comma+`firstcol = '${doc.Description_1}'`
+    if(doc.description1){
+    sql+=comma+`Description_1 = '${doc.description1}' `
     comma = ','}
-    if(description_2){
-    sql+=comma+`description_2 = '${doc.Description_2}'`
+    if(doc.description2){
+    sql+=comma+`Description_2 = '${doc.description2}' `
     comma = ','}
-   sql+= ` WHERE Name = ${name}`;
+   sql+= ` WHERE PacketID = ${ID} `;
     const result  = await Module.query(sql);
     return Promise.resolve (result)
   }catch(err){
-    return Promise.rejecet(err)
+    return Promise.reject(err)
   }
 }
 }

@@ -3,18 +3,19 @@ const { json, urlencoded } = require('body-parser')
 const userRoutes = require('./api/routes/user')
 const adminRoutes = require('./api/routes/admin')
 const sendmail  = require('./services/mail')
-const productRoutersAdmin = require('./api/routes/productadmin')
+const productRoutersAdmin  = require('./api/routes/productsadmin')
 const orderRouters = require('./api/routes/order')
 const productRoutersUser = require('./api/routes/productuser')
 const app = express()
 app.use(urlencoded({ extended: true }));
 app.use(json());
 
+
+app.use('/admin',adminRoutes);
+app.use('/admin/products',productRoutersAdmin);
 app.use('/user',userRoutes);
-app.use('/admin',adminRoutes)
-app.use('/admin/product',productRoutersAdmin)
 app.use('/order',orderRouters)
-app.use('/product',productRoutersUser)
+app.use('/products',productRoutersUser)
 app.post('/order', async(req,res)=>{
     try{
         const result = await sendmail.newprodinfo(req.body.orders)

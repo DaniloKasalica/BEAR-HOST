@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken')
 const product = {
     FindProductsByMarketingID: async(req,res)=>{
         try{
-     const packetID = await  productService.FindPacketIDByMarketingID(req.params.marketingID)
+     const packet = await  productService.FindPacketIDByMarketingID(req.params.marketingID)
+     const packetID = packet[0].ID
      const products = await productService.FindProductsByPacketID(packetID)
      res.status(200).send(products)
         }catch(err){

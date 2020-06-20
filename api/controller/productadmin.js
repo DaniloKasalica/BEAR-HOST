@@ -5,31 +5,31 @@ const jwt = require('jsonwebtoken')
 const product = {
    UpdateProduct: async(req,res)=>{
        try{
-    const result = await  productService.UpdateProdByName(req.params.prodname,req.body)
+    const result = await  productService.UpdateProdByID(req.params.productID,req.body)
     res.status(200).send(req.body)
        }catch(err){
         res.status(400).send({error: err.message})
        }
    },
-   UpdateProductMarketing: async(req,res)=>{
+   UpdateMarketing: async(req,res)=>{
       try{
-         const result = await marketingService.UpdateProdByName(req.params.prodname,req.body)
-         res.status(200).send(req.body)
+         const result = await marketingServic.UpdateMarketingByID(req.params.MarketingID,req.body)
+         res.status(201).send(req.body)
       }catch(err){
          res.status(400).send({error: err.message})
       }
    },
    AddNewProd: async(req,res)=>{
-      try{
-         const result = await productService.InsertIntoTable(req.body)
-         res.status(200).send('new product')
+      try{console.log(req.params.PacketID)
+         const result = await productService.InsertIntoTable(req.body,req.params.PacketID)
+         res.sendStatus(200)
       }catch(err){
          return res.status(400).send({error: err.message})
       }
    },
    AddNewProdMarketing: async(req,res)=>{
       try{
-         const result = await marketingServic.InsertIntoTable(req.body) 
+         const result = await marketingServic.InsertIntoTable(req.body,req.params.PacketID) 
          res.status(200).send('New marketing product')
       }catch(err){
          res.status(400).send({error: err.message})
