@@ -13,6 +13,17 @@ const product = {
          res.status(400).send({error: err.message})
         }
     },
+    FindProductsByPacketName: async(req,res) =>{
+       try{
+          const packet = await productService.FindPacketIDByPacketName(req.params.PacketName)
+          const packetID = packet.ID
+          const products = await productService.FindProductsByPacketID(packetID)
+          res.status(200).send(products)
+          
+       }catch(err){
+          res.status(400).send({error:err.message})
+       }
+    },
     FindMarketingProducts: async(req,res)=>{
        try{
           const result = await marketingServic.FindMarketingProducts()

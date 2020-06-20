@@ -100,9 +100,17 @@ FindPacketIDByMarketingID: async(ID)=>{
     const result = await Module.query(sql1);
     return Promise.resolve(result)
   }catch(err){
-    console.log(err)
-    
     return Promise.reject(err)
+  }
+},
+FindPacketIDByPacketName: async(PacketName)=>{
+  try{
+   const sql = `SELECT PacketID as ID FROM Packets WHERE '${PacketName}'= PacketName`
+   const result = await Module.query(sql)
+   return Promise.resolve(result[0])
+  }catch(err){
+    return Promise.reject(err)
+
   }
 },
 FindProductsByPacketID: async(ID)=>{
