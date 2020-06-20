@@ -94,13 +94,21 @@ try{
    }
  },
 
-FindProductsByTip: async(parentname)=>{
+FindPacketIDByMarketingID: async(ID)=>{
   try{
-    const sql1 = `SELECT MarketingID as ID  FROM  Marketing WHERE  '${parentname}' = Name`;
-    const result1 = await Module.query(sql1);
-    const sql2 = `SELECT *  FROM Products WHERE '${result1[0].ID}' = MarketingID `
+    const sql1 = `SELECT  ID  FROM  Packets WHERE  '${ID}' = MarketingID`;
+    const result = await Module.query(sql1);
+    return Promise.resolve(result)
+  }catch(err){
+    return Promise.reject(err)
+  }
+},
+FindProductsByPacketID: async(ID)=>{
+  try{
+    const sql2 = `SELECT *  FROM Products WHERE '${ID}' = PacketID `
     const result = await Module.query(sql2)
     return Promise.resolve(result)
+
   }catch(err){
     return Promise.reject(err)
   }

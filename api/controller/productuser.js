@@ -3,10 +3,11 @@ const tokenService = require('../service/token')
 const marketingServic = require('../service/marketing')
 const jwt = require('jsonwebtoken')
 const product = {
-    FindProductsByMarketingName: async(req,res)=>{
+    FindProductsByMarketingID: async(req,res)=>{
         try{
-     const result = await  productService.FindProductsByTip(req.params.marketingname)
-     res.status(200).send(result)
+     const packetID = await  productService.FindPacketIDByMarketingID(req.params.marketingID)
+     const products = await productService.FindProductsByPacketID(packetID)
+     res.status(200).send(products)
         }catch(err){
          res.status(400).send({error: err.message})
         }

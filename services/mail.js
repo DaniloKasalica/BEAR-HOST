@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const ObjectsToCsv = require('objects-to-csv');
+//const ObjectsToCsv = require('objects-to-csv');
 const adminService = require('../api/service/user');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -89,7 +89,6 @@ class mailOptionsobjNewOrder {
   };
 };
  const writecsvfile = async (doc)=>{
-   console.log(doc)
    const csv = new ObjectsToCsv(doc);
    return  await csv.toDisk(__dirname+'/order.csv')
  }
