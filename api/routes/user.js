@@ -14,6 +14,7 @@ router.get('/security/:token',auth.authenticateBlockToken,userController.login) 
 router.post('/login',auth.login,userController.login)
 router.post('/token',userController.refreshToken)
 router.post('/logout', userController.logout)
+
 router.put('/setings/update',auth.authenticateToken,validation.updateuser, auth.encpassword,userController.UpdateUser)
 router.put('/security/password',userController.RessetPassword)
 

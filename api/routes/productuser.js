@@ -10,7 +10,7 @@ const productController = require('../controller/productuser')
 
 router.get('/marketing',productController.FindMarketingProducts)
 //router.get('/:marketingID',productController.FindProductsByMarketingID)
-router.get('/:PacketName', productController.FindProductsByPacketName )
-
+//router.get('/:PacketName', productController.FindProductsByPacketName )
+router.get('/:PacketID', productController.FindProductsByPacketID)
 
 module.exports = router

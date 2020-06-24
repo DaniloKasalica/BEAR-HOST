@@ -15,6 +15,15 @@ const sql = require("./db.js")
       PRIMARY KEY (PacketID)
     );`
 
+    const createtablecomments = `CREATE TABLE IF NOT EXISTS Comments (
+      CommentID int(11) NOT NULL auto_increment,
+      Grade int(1),
+      Comment Varchar(255),
+      Name Varchar(15),
+      Job Varchar(20),
+      PRIMARY KEY (CommentID)
+    );`
+
     const createtablemarketing = `CREATE TABLE IF NOT EXISTS Marketing (
       MarketingID int(11) NOT NULL auto_increment,
       Title varchar(255) ,
@@ -111,8 +120,12 @@ const sql = require("./db.js")
    sql.query( createtabletoken , (err,data)=>{
     if(err)
     console.log(err)
-    console.log(data)
   })
+  sql.query( createtablecomments , (err,data)=>{
+   if(err)
+   console.log(err)
+   console.log(data)
+ })
  
   /*sql.query(createvieworder,(err,data)=>{
     if(err)
@@ -130,20 +143,28 @@ const sql = require("./db.js")
       });
   }
 
-
+/*
   
-    /*
-   sql.query(`INSERT INTO Packets (PacketName) VALUES ('Shared');
+   sql.query(`
+   INSERT INTO Packets (PacketName) VALUES ('Shared');
    INSERT INTO Packets (PacketName) VALUES ('VPS');
    INSERT INTO Packets (PacketName) VALUES ('Dedicated');
    INSERT INTO Packets (PacketName) VALUES ('Cloud')`,(err,data)=>{
      if(err)
      console.log(err)
    })
-   sql.query(`INSERT INTO Marketing (Title, Description_1, Description_2, PacketID) VALUES ('Naslov Shared', 'Kratki opis neki1', 'Malo duzi opis neki2 ', '1');
-   INSERT INTO Marketing (Title, Description_1, Description_2, PacketID) VALUES ('Naslov Dedicated', 'dedicated kratki opis', 'Dedicated', '3');
-   INSERT INTO Marketing (Title, Description_1, Description_2, PacketID) VALUES ('NaslovVPS', 'VPS opis kratki', 'VPS opis dugi dsad as', '2');
-   INSERT INTO Marketing (Title, Description_1, Description_2, PacketID) VALUES ('Naslov Shared', 'Shared kratki opis ', 'Shared dugi opisd sad dsa', '4');`)
+   sql.query(`
+   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (4,'Skoro Najjaca stvar koju sam probao','Pear Johanson','Profesor');
+   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (1,'Najgora stvar koju sam vidio','Petar drugi','Biznismen');
+   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (5,'Najjaca stvar koju sam probao','Mihailo Sumaher','Vodoinstalater')`,(err,data)=>{
+     if(err)
+     console.log(err)
+   })
+   sql.query(`
+   INSERT INTO Marketing (Title, Description_1, Description_2, PacketID) VALUES ('Shared Hosting', 'Fully managed, enterprise cloud hosting with failover support, load balancing and email hosting, starting at just ', 'Fully managed, enterprise cloud hosting with failover support and load balancing, including clustered email hosting and advanced administration options.', '1');
+   INSERT INTO Marketing (Title, Description_1, Description_2, PacketID) VALUES ('Dedicated Private Cloud', 'Enterprise cloud servers with fully dedicated resources and KVM virtualization, starting at just ', 'Enterprise cloud servers with fully dedicated resources and KVM virtualization for up to 32 virtual machines, including access to our deployment API for advanced automation tasks.', '3');
+   INSERT INTO Marketing (Title, Description_1, Description_2, PacketID) VALUES ('Virtual Cloud Servers', 'High performance cloud servers on enterprise infrastructure with KVM virtualization and dynamic scaling, starting at just ', 'High performance cloud servers on enterprise infrastructure with KVM virtualization, full access to our deployment API for advanced developer and scaling operations.', '2');
+   INSERT INTO Marketing (Title, Description_1, Description_2, PacketID) VALUES ('Montenegro Cloud Servers', 'Designed specially for Montenegro starting at just ', 'Designed specially for Montenegro, fully managed and provides high performance.', '4');`)
 
    sql.query(`
    INSERT INTO Products (ProductName, PacketID, Price_1, Description_price, Description_1, Value_1, Description_2, Value_2, Description_3, Value_3) VALUES ('VPS-20', '2', 20, 'month', 'dsadsa', '2', ' sadd sa', '2', ' dasd ', '3');
@@ -151,8 +172,16 @@ const sql = require("./db.js")
    INSERT INTO Products (ProductName, PacketID, Price_1,  Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('VPS-60', '2', 80, 'month', 'd sad', '312', '  sadsadsad asd', '44');
    INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business', '1', 100, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
    INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business Plus', '1', 400, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basic', '1',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');`)
-  */
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basic', '1',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business', '3', 50, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business Plus', '3', 500, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basic', '3',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');
+   
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business', '4', 50, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business Plus', '4', 500, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basic', '4',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');`)
+  
+    */
 
 
 

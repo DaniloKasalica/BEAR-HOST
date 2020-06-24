@@ -51,7 +51,7 @@ authenticateToken : async (req,res,next)=>{
     next()
   })
 },
-authenticateBlockToken : async (req,res,next)=>{
+authenticateBlockToken :  (req,res,next)=>{
   const token = req.params.token// Bearer TOKEN
   if(token == null) return res.sendStatus(401)
   jwt.verify(token,process.env.BLOCK_TOKEN, async (err,response)=>{
@@ -73,8 +73,7 @@ const authadmin = {
   res.status(403).send({error: 'ROLE: 0'})
   if(checkuser.IsActive==false)
   res.status(403).send({error: 'Admin status 0'})
-         const resp = await bcrypt.compare(req.body.password, checkuser.Password);
-         
+  const resp = await bcrypt.compare(req.body.password, checkuser.Password);
          req.body.id = checkuser.UserID;
          if(resp){
           next()
