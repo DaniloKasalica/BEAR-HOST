@@ -110,6 +110,11 @@ const sql = require("./db.js")
       JOIN order_products ON orders.OrderID = order_products.OrderID
       JOIN users ON orders.UserID = users.UserID
       `
+      sql.query(createvieworder,(err,data)=>{
+        if(err){
+          console.log(err)
+        }
+      })
       sql.query(createtablepacket,(err,data)=>{
         if(err){
           console.log(err)

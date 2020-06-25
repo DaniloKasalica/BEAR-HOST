@@ -14,7 +14,17 @@ const cart = {
            return res.status(400)
         }
         
-    }
+    },
+    FindUserCarts: async(req,res,next)=>{
+      try{
+   const result = await  cartService.FindUserCartsByUserID(req.params.id)
+
+   res.status(200).send({carts: result})
+      }catch(err){
+         return res.status(400)
+      }
+      
+  }
 }
 const asyncForEach = async (array, callback) => {
   for (let index = 0; index < array.length; index++) {

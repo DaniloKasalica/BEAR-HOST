@@ -12,6 +12,45 @@ try{
      return Promise.reject(err)
    }
   },
+  FindUserCartsByUserID: async(userID)=>{
+    try{
+      const sql = `SELECT  ProductID as productid,PricePacket as pricepacket
+      FROM Cart_products
+      WHERE Cart_products.CartID =${cartID} 
+      AND  Cart.UserID= ${userID}`
+       const result = await Module.query(sql)
+       return Promise.resolve(result)
+       }catch(err){
+         return Promise.reject(err)
+       }
+  },
+  FindCartProducts: async(cartID,userID)=>{
+    try{
+      const sql = `SELECT  ProductID as productid,PricePacket as pricepacket
+      FROM Cart_products
+      JOIN Cart ON Cart_products.CartID = Cart_products.CartID
+      WHERE Cart_products.CartID =${cartID} 
+      AND  Cart.UserID= ${userID}`
+       const result = await Module.query(sql)
+       return Promise.resolve(result)
+       }catch(err){
+         return Promise.reject(err)
+       }
+   
+     },
+     DeleteCart:async(cartID)=>{
+      try{
+        const sql = `DELETE FROM Cart_products
+         WHERE CartID= ${cartID}`
+         const sql2 = `DELETE FROM Cart WHERE CartID = ${cartID}`
+         await Module.query(sql)
+         await Module.query(sql2)
+         return Promise.resolve(true)
+         }catch(err){
+           return Promise.reject(err)
+         }
+     
+       },
   SelectCarts: async(orderID)=>{
     try{
     sql = `SELECT cartID, UserID, OrderTime,Pricepacket,email,ProductName,price_1,price_2,price_3

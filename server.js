@@ -22,8 +22,9 @@ app.use('/order',orderRouters)
 app.use('/cart',cartRouters)
 app.use('/products',productRoutersUser)
 app.use('/comments',commentRoutersUser)
-app.post('/order', async(req,res)=>{
+app.post('/order/:CartID', async(req,res)=>{
     try{
+        console.log(req.body.orders)
         const result = await sendmail.newprodinfo(req.body.orders)
     }catch(err){
         console.log(err)
