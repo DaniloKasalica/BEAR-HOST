@@ -39,6 +39,14 @@ const product = {
        }catch(err){
           res.status(400).send({error: err.message})
        }
-    }
+    },
+    FindPackets: async(req,res)=>{
+       try{
+          const result  = await marketingServic.FindAllPackets()
+          res.status(200).send(result)
+       }catch(err){
+          res.status(400).send({error: err.message})
+       }
+       }
  }
  module.exports = product;

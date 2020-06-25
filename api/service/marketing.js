@@ -17,12 +17,23 @@ try{
      return Promise.reject(err)
    }
 },
+FindAllPackets: async()=>{
+  try{
+    const sql = `Select PacketID as packetid, 
+    PacketName as packetname
+    FROM Packets`
+     const result = await Module.query(sql)
+    return Promise.resolve(result)
+  }catch(err){
+    return Promise.reject(err)
+  }
+},
 FindMarketingProducts: async()=>{
   try{
     const sql = `SELECT MIN(Price_1) as minprice,
     Title as title,products.Description_price pricedescription,
-     Marketing.Description_1 as description1,Marketing.Description_2 as description2,
-     Marketing.PacketID as packetid
+    Marketing.Description_1 as description1,Marketing.Description_2 as description2,
+    Marketing.PacketID as packetid
     FROM Products
     JOIN Marketing ON Products.PacketID = Marketing.PacketID
     GROUP BY Title;`

@@ -1,10 +1,10 @@
 const Module = require('../model/model')
 
 
-const order = {
-  AddNewOrder: async (userID) =>{
+const cart = {
+  AddNewCart: async (userID) =>{
 try{
-  const sql= `INSERT INTO Orders (UserID)
+  const sql= `INSERT INTO Cart (UserID)
   VALUES (${userID})`
    const result =  await Module.query(sql)
    return Promise.resolve(result)
@@ -12,9 +12,9 @@ try{
      return Promise.reject(err)
    }
   },
-  SelectOrders: async(orderID)=>{
+  SelectCarts: async(orderID)=>{
     try{
-    sql = `SELECT orderID, UserID, OrderTime,Pricepacket,email,ProductName,price_1,price_2,price_3
+    sql = `SELECT cartID, UserID, OrderTime,Pricepacket,email,ProductName,price_1,price_2,price_3
     FROM orders_view
     JOIN products ON orders_view.ProductID = products.ProductID
     WHERE OrderID = ${orderID}`
@@ -25,19 +25,19 @@ try{
     }
 
   },
-   AddNewOrderProduct: async(orderID, productID,pricepacket)=>{
+   AddNewCartProduct: async(cartID, productID,pricepacket)=>{
      try{
        const sql = `
-       INSERT INTO order_products(
-       OrderID,
+       INSERT INTO cart_products(
+       CartID,
        ProductID,
        PricePacket 
        ) VALUES ?`
-       const result = await Module.query(sql,[[[orderID,productID,pricepacket]]])
+       const result = await Module.query(sql,[[[cartID,productID,pricepacket]]])
        return Promise.resolve(result)
      }catch(err){
        return Promise.reject(err)
      }
    }
 }
-module.exports = order;
+module.exports = cart;

@@ -84,6 +84,25 @@ const sql = require("./db.js")
         FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
         FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
       )`//PricePacket- koje od 3 kolone za cijenu je izabrao 
+
+      const createtablecart = `CREATE TABLE IF NOT EXISTS Cart(
+        CartID int(11) NOT NULL auto_increment,
+        UserID int(11),
+        OrderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (CartID),
+        FOREIGN KEY (UserID) REFERENCES Users(UserID)
+      )`
+    const createtableproductcart = `CREATE TABLE IF NOT EXISTS Cart_Products(
+        CartProductID int(11) NOT NULL auto_increment,
+        CartID int(11) NOT NULL,
+        ProductID int(11)  NOT NULL,
+        PricePacket int(1) NOT NULL,
+		    PRIMARY KEY (CartProductID),
+        FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+        FOREIGN KEY (CartID) REFERENCES Cart(CartID)
+      )`
+
+
       const createvieworder = `CREATE VIEW  Orders_View
       AS
       SELECT orders.OrderID,orders.UserID,OrderTime,ProductID,Pricepacket,email
@@ -124,8 +143,15 @@ const sql = require("./db.js")
   sql.query( createtablecomments , (err,data)=>{
    if(err)
    console.log(err)
-   console.log(data)
  })
+ sql.query( createtablecart , (err,data)=>{
+  if(err)
+  console.log(err)
+})
+sql.query( createtableproductcart , (err,data)=>{
+ if(err)
+ console.log(err)
+})
  
   /*sql.query(createvieworder,(err,data)=>{
     if(err)

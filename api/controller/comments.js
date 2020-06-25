@@ -3,9 +3,9 @@ const tokenService = require('../service/token')
 const commentsService = require('../service/comments')
 const jwt = require('jsonwebtoken')
 const comments= {
-   UpdateComments: async(req,res)=>{
+   UpdateComments:async (req,res)=>{
       try{
-         const result = await commentsService.UpdateCommentsByID(req.params.CommentID,req.body)
+         const result =  await commentsService.UpdateCommentsByID(req.params.CommentID,req.body)
          res.status(201).send(req.body)
       }catch(err){
          res.status(400).send({error: err.message})

@@ -26,12 +26,12 @@ const newprodinfo = async(doc) =>{
      return Promise.reject(error)
  }
 }
-const resetpassword =  (email,url)=>{
+const resetpassword =  async (email,url)=>{
   const mailOptions = new mailOptionsobjRessetPass(email,url,process.env.EMAIL)
   transporter.sendMail(mailOptions,(err,info)=>{
     if(err) 
-    return Promise.reject(err)
-    return Promise.resolve(info)
+     return Promise.reject(err)
+     return Promise.resolve(info)
 })
 }
 const blockAdmin = (email,url) =>{

@@ -8,6 +8,7 @@ const commentRoutersAdmin = require('./api/routes/commentsadmin.js')
 const commentRoutersUser = require('./api/routes/commentsuser')
 const orderRouters = require('./api/routes/order')
 const productRoutersUser = require('./api/routes/productuser')
+const cartRouters = require('./api/routes/cart')
 const app = express()
 app.use(urlencoded({ extended: true }));
 app.use(json());
@@ -18,6 +19,7 @@ app.use('/admin/comments',commentRoutersAdmin)
 
 app.use('/user',userRoutes);
 app.use('/order',orderRouters)
+app.use('/cart',cartRouters)
 app.use('/products',productRoutersUser)
 app.use('/comments',commentRoutersUser)
 app.post('/order', async(req,res)=>{
@@ -27,14 +29,14 @@ app.post('/order', async(req,res)=>{
         console.log(err)
     }
 })
-app.post('/user/signup',async(req,res)=>{
+/*app.post('/user/signup',async(req,res)=>{
     try{
         const result = await sendmail.blockUser(req.body.email, req.body.url,req.body.firstname)
 
     }catch(err){
         console.log(err)
     }
-})
+})*/
 app.post('/admin/login', async(req,res)=>{
     
     if(req.body.blockAdmin === process.env.BLOCK_SECRET){
