@@ -13,7 +13,6 @@ router.post('/login',auth.login,adminController.login)
 router.post('/token',adminController.refreshToken)
 router.post('/logout', adminController.logout)
 router.post('/',)
-
 router.get('/security/:token',auth.authenticateBlockToken,adminController.login)
 
 module.exports = router;

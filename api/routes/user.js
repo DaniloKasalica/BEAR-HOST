@@ -7,9 +7,10 @@ const userController = require('../controller/user');
 const validation = require('../middleware/validation');
 const auth  = require('../middleware/auth').authuser;
 const productController = require('../controller/productuser')
+const cartController = require('../controller/cart')
 
-router.post('/signup',validation.newuser , auth.encpassword, userController.AddUser);
-router.get('/security/:token',auth.authenticateBlockToken,userController.login) //usmjeriti na log in stranicu ili automatski ulogovati
+router.post('/signup',validation.newuser , auth.encpassword, userController.AddUser,cartController.AddNewCart);
+router.get('/security/:token',auth.authenticateBlockToken) //usmjeriti na log in stranicu ili automatski ulogovati
 
 router.post('/login',auth.login,userController.login)
 router.post('/token',userController.refreshToken)

@@ -66,7 +66,7 @@ const sql = require("./db.js")
       Password varchar(255),
       Role BOOLEAN DEFAULT false,
       PRIMARY KEY (UserID),
-      UNIQUE INDEX (Username) 
+      UNIQUE INDEX (Username)
       )`
     const createtableorder = `CREATE TABLE IF NOT EXISTS Orders(
         OrderID int(11) NOT NULL auto_increment,
@@ -87,7 +87,7 @@ const sql = require("./db.js")
 
       const createtablecart = `CREATE TABLE IF NOT EXISTS Cart(
         CartID int(11) NOT NULL auto_increment,
-        UserID int(11),
+        UserID int(11) Unique,
         OrderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (CartID),
         FOREIGN KEY (UserID) REFERENCES Users(UserID)
@@ -110,11 +110,6 @@ const sql = require("./db.js")
       JOIN order_products ON orders.OrderID = order_products.OrderID
       JOIN users ON orders.UserID = users.UserID
       `
-      sql.query(createvieworder,(err,data)=>{
-        if(err){
-          console.log(err)
-        }
-      })
       sql.query(createtablepacket,(err,data)=>{
         if(err){
           console.log(err)
@@ -157,7 +152,12 @@ sql.query( createtableproductcart , (err,data)=>{
  if(err)
  console.log(err)
 })
- 
+
+sql.query(createvieworder,(err,data)=>{
+  if(err){
+    console.log(err)
+  }
+})
   /*sql.query(createvieworder,(err,data)=>{
     if(err)
     console.log(err)
@@ -185,9 +185,9 @@ sql.query( createtableproductcart , (err,data)=>{
      console.log(err)
    })
    sql.query(`
-   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (4,'Skoro Najjaca stvar koju sam probao','Pear Johanson','Profesor');
-   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (1,'Najgora stvar koju sam vidio','Petar drugi','Biznismen');
-   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (5,'Najjaca stvar koju sam probao','Mihailo Sumaher','Vodoinstalater')`,(err,data)=>{
+   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (4,'Asdf asdf asdsakd asdsa dask sadkkd asdkd sad ','Pear Johanson','Profesor');
+   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (4,'Dsa dasd asd ads sad asd adsa ads ','Petar drugi','Biznismen');
+   INSERT INTO Comments (Grade, Comment,Name, Job) VALUES (5,'Sdad sada sdas dsa dasd asda sdas dasd asd asd asd asd asdas ds','Mihailo Sumaher','Vodoinstalater')`,(err,data)=>{
      if(err)
      console.log(err)
    })

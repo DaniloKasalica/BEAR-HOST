@@ -3,8 +3,9 @@ const router = express.Router();
 const cartController = require('../controller/cart');
 const auth  = require('../middleware/auth').authuser;
 
-router.post('/',auth.authenticateToken,cartController.AddNewCart)
+router.put('/',auth.authenticateToken,cartController.UpdateCart)
 router.get('/',auth.authenticateToken,cartController.FindUserCarts)
+router.delete('/:cartproductID',auth.authenticateToken,cartController.RemoveFromCart)
 
 
 module.exports = router

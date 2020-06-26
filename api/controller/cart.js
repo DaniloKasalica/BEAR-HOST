@@ -3,23 +3,44 @@ const cartService = require('../service/cart')
 const cart = {
     AddNewCart : async(req,res,next)=>{
         try{
-     const result = await  cartService.AddNewCart(req.params.id)
-     const cartID = result.insertId
-     await Promise.all(
-        req.body.products.map(async (elem) => {
-          await cartService.AddNewCartProduct(cartID,elem.productid,elem.pricepacket)
-      }));
-     res.sendStatus(201)
+      await  cartService.AddNewCart(req.params.id)
+     next()
         }catch(err){
            return res.sendStatus(400)
         }
         
     },
+    RemoveFromCart: async(req,res)=>{
+       try{
+         const CartID  = (await cartService.FindCartIDByUserID(req.params.id)).cartid
+         await cartService.RemoveCart_productByID(req.params.cartproductID,CartID)
+          res.sendStatus(200)
+       }
+       catch(err){
+          console.log(err)
+          res.sendStatus(400)
+       }
+    },
+    UpdateCart: async(req,res)=>{
+      try{
+         const CartID = (await cartService.FindCartIDByUserID(req.params.id)).cartid
+         await Promise.all(
+            req.body.products.map(async (elem) => {
+              await cartService.AddNewCartProduct(CartID,elem.productid,elem.pricepacket)
+          }));
+          res.sendStatus(200)
+            }catch(err){
+               return res.sendStatus(400)
+            }
+              
+    },
     FindUserCarts: async(req,res,next)=>{
       try{
-   const result = await  cartService.FindUserCartsByUserID(req.params.id)
+         const CartID = (await cartService.FindCartIDByUserID(req.params.id)).cartid
+   const result = await  cartService.FindCartProductsByCartID(CartID)
    res.status(200).send({carts: result})
       }catch(err){
+         console.log(err)
          return res.sendStatus(400)
       }
       
