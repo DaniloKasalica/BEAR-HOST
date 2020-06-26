@@ -11,6 +11,14 @@ const product = {
         res.status(400).send({error: err.message})
        }
    },
+   RemoveProduct: async(req,res)=>{
+      try{
+   const result = await  productService.DeleteProductByID(req.params.productID)
+   res.sendStatus(200)
+      }catch(err){
+       res.status(400).send({error: err.message})
+      }
+  },
    UpdateMarketing: async(req,res)=>{
       try{
          const result = await marketingServic.UpdateMarketingByID(req.params.MarketingID,req.body)

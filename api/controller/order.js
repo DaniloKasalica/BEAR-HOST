@@ -14,7 +14,6 @@ const order = {
     }))
     await cartService.RemoveAllCart_productsByCartID(cartID)
     req.body.orders = await orderService.SelectOrders(orderId)
-    console.log(req.body.orders)
      res.sendStatus(201)
      next()
         }catch(err){

@@ -25,7 +25,21 @@ try{
      return Promise.reject(err)
    }
 },
- UpdateProdByID: async(ID,doc)=>{
+
+DeleteProductByID : async(ID)=>{ 
+   try{
+  const sql = `DELETE FROM Products
+  WHERE ProductID =${ID}`
+   const result = await Module.query(sql)
+   if(result.affectedRows === 0){
+   throw new Error('can not find product')
+   }
+   return Promise.resolve(true)
+   }catch(err){
+     return Promise.reject(err)
+   }
+},
+UpdateProdByID: async(ID,doc)=>{
    try{
   let comma = ''
   let sql = `UPDATE Products SET `

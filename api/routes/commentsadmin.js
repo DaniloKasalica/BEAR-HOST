@@ -5,7 +5,7 @@ const router = express.Router();
 const auth  = require('../middleware/auth').authadmin;
 const commentController = require('../controller/comments')
 
-
+//admin/comments
 router.put('/:CommentID'/*,auth.authenticateToken*/, commentController.UpdateComments)
 //router.post('/', commentController.AddNewComment)
 
