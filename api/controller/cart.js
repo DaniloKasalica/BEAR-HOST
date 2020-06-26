@@ -11,17 +11,16 @@ const cart = {
       }));
      res.sendStatus(201)
         }catch(err){
-           return res.status(400)
+           return res.sendStatus(400)
         }
         
     },
     FindUserCarts: async(req,res,next)=>{
       try{
    const result = await  cartService.FindUserCartsByUserID(req.params.id)
-
    res.status(200).send({carts: result})
       }catch(err){
-         return res.status(400)
+         return res.sendStatus(400)
       }
       
   }
