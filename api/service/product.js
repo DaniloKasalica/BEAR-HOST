@@ -171,7 +171,8 @@ FindAllProducts: async()=>{
     Description_4 as description4,
     Value_4 as value4,
     Description_5 as description5,
-    Value_5 as value5
+    Value_5 as value5,
+    PacketID as packetid
     FROM Products  `
     const result = await Module.query(sql2)
     return Promise.resolve(result)
