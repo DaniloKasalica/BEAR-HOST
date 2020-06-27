@@ -56,8 +56,12 @@ UpdateProdByID: async(ID,doc)=>{
         sql+= comma +` Price_3 = '${doc.price3}' `
         comma = ','
        }
-       if(doc.descriptionPrice){
+       if(doc.pricedescription){
        sql+=comma+ ` Description_price =  '${doc.pricedescription}' `
+       comma = ','
+       }
+       if(doc.productname){
+       sql+=comma+ ` ProductName =  '${doc.productname}' `
        comma = ','
        }
        if(doc.description1){
