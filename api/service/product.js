@@ -151,6 +151,30 @@ FindProductsByPacketID: async(ID)=>{
   }catch(err){
     return Promise.reject(err)
   }
+},
+FindAllProducts: async()=>{
+  try{
+    const sql2 = `SELECT ProductID as id,
+    ProductName as productname,
+    Price_1 as price1, Price_2 as price2, price_3 as price3,
+    Description_price as pricedescription,
+    Description_1 as description1,
+    Value_1 as value1,
+    Description_2 as description2,
+    Value_2 as value2,
+    Description_3 as description3,
+    Value_3 as value3,
+    Description_4 as description4,
+    Value_4 as value4,
+    Description_5 as description5,
+    Value_5 as value5
+    FROM Products  `
+    const result = await Module.query(sql2)
+    return Promise.resolve(result)
+
+  }catch(err){
+    return Promise.reject(err)
+  }
 }
 }
 module.exports = product;

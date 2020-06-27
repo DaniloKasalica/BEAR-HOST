@@ -24,6 +24,15 @@ const product = {
           res.status(400).send({error:err.message})
        }
     },
+     FindProducts: async(req,res)=>{
+      try{
+         const products = await productService.FindAllProducts()
+         res.status(200).send(products)
+      }catch(err){
+         res.sendStatus(400)
+      }
+   },
+
     FindProductsByPacketID: async(req,res)=>{
        try{
           const products = await productService.FindProductsByPacketID(req.params.PacketID)
