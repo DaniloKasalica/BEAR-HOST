@@ -15,8 +15,11 @@ const product = {
        }
    },
    RemoveProduct: async(req,res)=>{
-      try{
-   const result = await  productService.DeleteProductByID(req.params.productID)
+      try{  
+          await Promise.all(
+         req.body.marketing.map(async (elem) => {
+            await  productService.DeleteProductByID(elem.id)
+       }))
    res.sendStatus(200)
       }catch(err){
        res.status(400).send({error: err.message})
@@ -34,8 +37,11 @@ const product = {
       }
    },
    AddNewProd: async(req,res)=>{
-      try{console.log(req.params.PacketID)
-         const result = await productService.InsertIntoTable(req.body,req.params.PacketID)
+      try{
+         await Promise.all(
+            req.body.products.map(async (elem) => {
+               await productService.InsertIntoTable(elem,elem.id)
+          }))
          res.sendStatus(200)
       }catch(err){
          return res.status(400).send({error: err.message})
