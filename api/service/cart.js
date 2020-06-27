@@ -106,16 +106,15 @@ try{
     }
 
   },
-   AddNewCartProduct: async(cartID, productID,pricepacket)=>{
+   AddNewCartProduct: async(cartID, productID)=>{
      try{
        console.log(cartID,productID,pricepacket)
        const sql = `
        INSERT INTO cart_products(
        CartID,
-       ProductID,
-       PricePacket 
+       ProductID
        ) VALUES ?`
-       const result = await Module.query(sql,[[[cartID,productID,pricepacket]]])
+       const result = await Module.query(sql,[[[cartID,productID]]])
        return Promise.resolve(result)
      }catch(err){
        return Promise.reject(err)
