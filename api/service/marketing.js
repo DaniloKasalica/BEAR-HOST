@@ -33,7 +33,7 @@ FindMarketingProducts: async()=>{
     const sql = `SELECT MIN(Price_1) as minprice,
     Title as title,products.Description_price pricedescription,
     Marketing.Description_1 as description1,Marketing.Description_2 as description2,
-    Marketing.PacketID as packetid,Marketing.MarketingID as marketingid
+    Marketing.MarketingID as id
     FROM Products
     JOIN Marketing ON Products.PacketID = Marketing.PacketID
     GROUP BY Title;`
