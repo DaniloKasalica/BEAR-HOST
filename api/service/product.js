@@ -65,8 +65,8 @@ UpdateProdByID: async(ID,doc)=>{
        comma = ','
        }
        if(doc.description1){
-        comma = ','
        sql+= comma +` Description_1 ='${doc.description1}' `
+       comma = ','
        }
        if(doc.value1){
        sql+= comma + `  Value_1 = '${doc.value1}' `
