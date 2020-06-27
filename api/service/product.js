@@ -73,8 +73,8 @@ UpdateProdByID: async(ID,doc)=>{
        comma = ','
        }
        if(doc.description2){
-        comma = ','
         sql+= comma +  ` Description_2 = '${doc.description2}' `
+        comma = ','
        }
        if(doc.value2){
        sql+=comma + ` Value_2 = '${doc.value2}' `
@@ -104,7 +104,7 @@ UpdateProdByID: async(ID,doc)=>{
        sql+= comma+` Value_5 = '${doc.value5}' `
        comma = ','
        }
-      sql += `WHERE ProductID = '${ID}' `
+      sql += `WHERE ProductID = ${ID} `
       console.log(sql)
    const result = await Module.query(sql)
    return Promise.resolve(result)

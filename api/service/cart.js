@@ -53,7 +53,8 @@ try{
        }
 
   },
-  FindCartIDByUserID: async(userID)=>{
+ 
+  CheckIfProductExist:  async(userID)=>{
     try{
       const sql = `SELECT CartID as cartid
       FROM cart
