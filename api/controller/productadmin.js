@@ -17,7 +17,7 @@ const product = {
    RemoveProduct: async(req,res)=>{
       try{  
           await Promise.all(
-         req.body.marketing.map(async (elem) => {
+         req.body.products.map(async (elem) => {
             await  productService.DeleteProductByID(elem.id)
        }))
    res.sendStatus(200)
