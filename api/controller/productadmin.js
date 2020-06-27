@@ -5,7 +5,10 @@ const jwt = require('jsonwebtoken')
 const product = {
    UpdateProduct: async(req,res)=>{
        try{
-    const result = await  productService.UpdateProdByID(req.params.productID,req.body)
+         await Promise.all(
+            req.body.products.map(async (elem) => {
+               await  productService.UpdateProdByID(req.params.productID,elem)
+          }))
     res.status(200).send(req.body)
        }catch(err){
         res.status(400).send({error: err.message})
@@ -21,7 +24,10 @@ const product = {
   },
    UpdateMarketing: async(req,res)=>{
       try{
-         const result = await marketingServic.UpdateMarketingByID(req.params.MarketingID,req.body)
+         await Promise.all(
+            req.body.marketing.map(async (elem) => {
+                await marketingServic.UpdateMarketingByID(req.params.MarketingID,elem)
+          }))
          res.status(201).send(req.body)
       }catch(err){
          res.status(400).send({error: err.message})
