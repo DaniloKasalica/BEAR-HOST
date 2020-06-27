@@ -18,7 +18,7 @@ const sql = require("./db.js")
     const createtablecomments = `CREATE TABLE IF NOT EXISTS Comments (
       CommentID int(11) NOT NULL auto_increment,
       Grade int(1),
-      Comment Varchar(255),
+      Comment Varchar(255) UNIQUE,
       Name Varchar(15),
       Job Varchar(20),
       PRIMARY KEY (CommentID)
@@ -26,7 +26,7 @@ const sql = require("./db.js")
 
     const createtablemarketing = `CREATE TABLE IF NOT EXISTS Marketing (
       MarketingID int(11) NOT NULL auto_increment,
-      Title varchar(255) ,
+      Title varchar(255) UNIQUE ,
       Description_1 varchar(255),
       Description_2 varchar(255),
       PacketID int(11),

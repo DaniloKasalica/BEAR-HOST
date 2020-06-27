@@ -30,6 +30,7 @@ DeleteProductByID : async(ID)=>{
    try{
   const sql = `DELETE FROM Products
   WHERE ProductID =${ID}`
+  console.log(sql)
    const result = await Module.query(sql)
    if(result.affectedRows === 0){
    throw new Error('can not find product')

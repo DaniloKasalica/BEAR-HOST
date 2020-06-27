@@ -9,4 +9,4 @@ const commentController = require('../controller/comments')
 router.put('/:CommentID'/*,auth.authenticateToken*/, commentController.UpdateComments)
 //router.post('/', commentController.AddNewComment)
 
-module.exports = router
+module.exports = router 
