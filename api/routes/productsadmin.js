@@ -7,8 +7,8 @@ const auth  = require('../middleware/auth');
 const productController = require('../controller/productadmin')
 
 //admin/products/
-router.put('/:productID',/*auth.authadmin.authenticateToken,*/productController.UpdateProduct)
-router.put('/marketing/:MarketingID',/*auth.authadmin.authenticateToken,*/productController.UpdateMarketing)
+router.put('/',/*auth.authadmin.authenticateToken,*/productController.UpdateProduct)
+router.put('/marketing',/*auth.authadmin.authenticateToken,*/productController.UpdateMarketing)
 router.post('/:PacketID',/*auth.authadmin.authenticateToken,*/productController.AddNewProd)
 router.delete('/:productID',/*auth.authadmin.authenticateToken,*/productController.RemoveProduct)
 //router.post('/newmarketingprod/:PacketID',/*auth.authadmin.authenticateToken,*/productController.AddNewProdMarketing)

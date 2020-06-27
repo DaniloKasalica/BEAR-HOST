@@ -7,7 +7,7 @@ const comments= {
       try{
          await Promise.all(
             req.body.comments.map(async (elem) => {
-               await commentsService.UpdateCommentsByID(req.params.CommentID,elem)
+               await commentsService.UpdateCommentsByID(elem.id,elem)
           }))
          res.status(201).send(req.body)
       }catch(err){
