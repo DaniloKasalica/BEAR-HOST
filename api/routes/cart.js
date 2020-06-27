@@ -7,7 +7,7 @@ const auth  = require('../middleware/auth').authuser;
 /* /CART/ */
 router.put('/',auth.authenticateToken,cartController.UpdateCart)
 router.get('/',auth.authenticateToken,cartController.FindUserCarts)
-router.delete('/:productID',auth.authenticateToken,cartController.RemoveFromCart)
+router.delete('/:ProductID',auth.authenticateToken,cartController.RemoveFromCart)
 
 
 module.exports = router
