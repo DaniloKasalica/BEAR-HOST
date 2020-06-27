@@ -9,8 +9,8 @@ const productController = require('../controller/productadmin')
 //admin/products/
 router.put('/',/*auth.authadmin.authenticateToken,*/productController.UpdateProduct)
 router.put('/marketing',/*auth.authadmin.authenticateToken,*/productController.UpdateMarketing)
-router.post('/:PacketID',/*auth.authadmin.authenticateToken,*/productController.AddNewProd)
-router.delete('/:productID',/*auth.authadmin.authenticateToken,*/productController.RemoveProduct)
+router.post('/',/*auth.authadmin.authenticateToken,*/productController.AddNewProd)
+router.delete('/',/*auth.authadmin.authenticateToken,*/productController.RemoveProduct)
 //router.post('/newmarketingprod/:PacketID',/*auth.authadmin.authenticateToken,*/productController.AddNewProdMarketing)
 
 
