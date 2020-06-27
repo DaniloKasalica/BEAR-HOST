@@ -5,7 +5,10 @@ const jwt = require('jsonwebtoken')
 const comments= {
    UpdateComments:async (req,res)=>{
       try{
-         const result =  await commentsService.UpdateCommentsByID(req.params.CommentID,req.body)
+         await Promise.all(
+            req.body.comments.map(async (elem) => {
+               await commentsService.UpdateCommentsByID(req.params.CommentID,elem)
+          }))
          res.status(201).send(req.body)
       }catch(err){
          res.status(400).send({error: err.message})
