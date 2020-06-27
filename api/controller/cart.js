@@ -23,15 +23,14 @@ const cart = {
     UpdateCart: async(req,res)=>{
       try{
          const CartID = (await cartService.FindCartIDByUserID(req.params.id)).cartid
+        const result =  await cartService.CheckIfProductExist(CartID,req.body.productid)
        // await Promise.all(
            // req.body.products.map(async (elem) => {
               await cartService.AddNewCartProduct(CartID,req.body.productid)
         //  }));
           res.sendStatus(200)
             }catch(err){
-               console.log(err)
-               console.log(err)
-               return res.sendStatus(400)
+               return res.status(400).send({error:err.message})
             }
               
     },

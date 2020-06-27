@@ -54,12 +54,14 @@ try{
 
   },
  
-  CheckIfProductExist:  async(userID)=>{
+  CheckIfProductExist:  async(cartID, productID)=>{
     try{
-      const sql = `SELECT CartID as cartid
-      FROM cart
-      WHERE cart.userID =${userID}`
+      const sql = `SELECT *
+      FROM cart_products
+      WHERE cart_products.CartID =${cartID} AND cart_products.ProductID = ${productID}` 
        const result = await Module.query(sql)
+       if(result[0]!==undefined)
+       throw new Error('Produkt vec postoji u korpi')
        return Promise.resolve(result[0])
        }catch(err){
          return Promise.reject(err)
@@ -96,7 +98,7 @@ try{
        },
   SelectCarts: async(orderID)=>{
     try{
-    sql = `SELECT cartID, UserID, OrderTime,Pricepacket,email,ProductName,price_1,price_2,price_3
+    sql = `SELECT CartID, UserID, OrderTime,Pricepacket,email,ProductName,price_1,price_2,price_3
     FROM orders_view
     JOIN products ON orders_view.ProductID = products.ProductID
     WHERE OrderID = ${orderID}`
@@ -106,6 +108,17 @@ try{
       return Promise.reject(err)
     }
 
+  },
+  FindCartIDByUserID: async(userID)=>{
+    try{
+      sql = `SELECT CartID as cartid
+      FROM Cart
+      WHERE Cart.UserID = ${userID}`
+      const result = await Module.query(sql)
+      return Promise.resolve(result[0])
+      }catch(err){
+        return Promise.reject(err)
+      }
   },
    AddNewCartProduct: async(cartID, productID)=>{
      try{
