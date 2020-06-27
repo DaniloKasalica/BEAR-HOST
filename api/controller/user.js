@@ -34,7 +34,7 @@ const user = {
       try{
       const refreshToken = req.body.token;
       if(refreshToken==null) 
-      return res.sendStatus(401)
+      return res.sendStatus(400)
      const result = await tokenService.DeleteToken(refreshToken)
      res.status(200).send('Loged out ')
       }catch(err){

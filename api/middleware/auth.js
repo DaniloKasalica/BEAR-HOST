@@ -58,7 +58,7 @@ authenticateBlockToken :  (req,res,next)=>{
     if(err){
     res.status(403)
     }
-    const result = await userService.UpdateActiveStatus(response.id,true)
+    const result =  await userService.UpdateActiveStatus(response.id,true)
     next()
   })
 }

@@ -13,7 +13,7 @@ const cart = {
     RemoveFromCart: async(req,res)=>{
        try{
          const CartID  = (await cartService.FindCartIDByUserID(req.params.id)).cartid
-         await cartService.RemoveCart_productByID(req.params.cartproductID,CartID)
+         await cartService.RemoveCart_productByID(req.params.ProductID,CartID)
           res.sendStatus(200)
        }
        catch(err){

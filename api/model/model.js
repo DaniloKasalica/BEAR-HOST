@@ -36,7 +36,7 @@ const sql = require("./db.js")
 
     const createtableproducts = `CREATE TABLE IF NOT EXISTS Products  (
       ProductID int(11) NOT NULL auto_increment,
-      ProductName varchar(255) NOT NULL,
+      ProductName varchar(255) NOT NULL UNIQUE,
       PacketID int(11) NOT NULL,
       Price_1 int(4),
       Price_2 int(4),
@@ -201,16 +201,16 @@ sql.query(createvieworder,(err,data)=>{
    INSERT INTO Products (ProductName, PacketID, Price_1, Description_price, Description_1, Value_1, Description_2, Value_2, Description_3, Value_3) VALUES ('VPS-20', '2', 20, 'month', 'dsadsa', '2', ' sadd sa', '2', ' dasd ', '3');
    INSERT INTO Products (ProductName, PacketID, Price_1, Description_price, Description_1, Value_1, Description_2, Value_2, Description_3, Value_3) VALUES ('VPS-40', '2', 50, 'month', 'dsa sad a', '3', ' sad dsa', '3', ' dsa ', '23');
    INSERT INTO Products (ProductName, PacketID, Price_1,  Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('VPS-60', '2', 80, 'month', 'd sad', '312', '  sadsadsad asd', '44');
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business', '1', 100, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Businss', '1', 100, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
    INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business Plus', '1', 400, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basic', '1',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business', '3', 50, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business Plus', '3', 500, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basic', '3',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basi', '1',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Busess', '3', 50, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Bussiness Plus', '3', 500, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basssic', '3',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');
    
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business', '4', 50, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Business Plus', '4', 500, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
-   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basic', '4',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');`)
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Businesds', '4', 50, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Busineass Plus', '4', 500, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
+   INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basiddc', '4',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');`)
   
     */
 

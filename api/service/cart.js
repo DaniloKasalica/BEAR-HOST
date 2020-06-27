@@ -28,10 +28,10 @@ try{
          return Promise.reject(err)
        }
   },
-  RemoveCart_productByID:async (cartproductID,CartID)=>{
+  RemoveCart_productByID:async (ProductID,CartID)=>{
     try{
       const sql = `DELETE FROM Cart_products
-      WHERE CartProductID =${cartproductID} AND CartID = ${CartID}`
+      WHERE ProductID =${ProductID} AND CartID = ${CartID}`
        const result = await Module.query(sql)
        console.log(result)
        if(result.affectedRows === 0){
