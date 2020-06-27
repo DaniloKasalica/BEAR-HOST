@@ -42,7 +42,7 @@ login : async(req,res,next)=>{
 authenticateToken : async (req,res,next)=>{
   const authHeader = req.headers['authorization']// Bearer TOKEN
   const token  =authHeader && authHeader.split(' ')[1]
-  if(token == null) return res.sendStatus(401)
+  if(token == null) return res.sendStatus(400)
 
   jwt.verify(token,process.env.ACCESS_TOKEN_USER, (err,response)=>{
     if(err)
@@ -53,7 +53,7 @@ authenticateToken : async (req,res,next)=>{
 },
 authenticateBlockToken :  (req,res,next)=>{
   const token = req.params.token// Bearer TOKEN
-  if(token == null) return res.sendStatus(401)
+  if(token == null) return res.sendStatus(400)
   jwt.verify(token,process.env.BLOCK_TOKEN, async (err,response)=>{
     if(err){
     res.status(403)
@@ -89,7 +89,7 @@ const authadmin = {
 },
 authenticateBlockToken : async (req,res,next)=>{
   const token = req.params.token// Bearer TOKEN
-  if(token == null) return res.sendStatus(401)
+  if(token == null) return res.sendStatus(400)
   jwt.verify(token,process.env.ACCESS_TOKEN_ADMIN, async (err,response)=>{
     if(err || response.role !== 1)
     res.sendStatus(403)
@@ -100,7 +100,7 @@ authenticateBlockToken : async (req,res,next)=>{
 authenticateToken : async (req,res,next)=>{
   const authHeader = req.headers['authorization']// Bearer TOKEN
   const token  =authHeader && authHeader.split(' ')[1]
-  if(token == null) return res.sendStatus(401)
+  if(token == null) return res.sendStatus(0)
 
   jwt.verify(token,process.env.ACCESS_TOKEN_ADMIN, (err,response)=>{
     if(err || response.role !== 1)
