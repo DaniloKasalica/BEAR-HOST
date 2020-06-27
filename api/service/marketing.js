@@ -57,7 +57,7 @@ UpdateMarketingByID: async(ID,doc)=>{
     if(doc.description2){
     sql+=comma+`Description_2 = '${doc.description2}' `
     comma = ','}
-   sql+= ` WHERE PacketID = ${ID} `;
+   sql+= ` WHERE MarketingID = ${ID} `;
     const result  = await Module.query(sql);
     return Promise.resolve (result)
   }catch(err){
