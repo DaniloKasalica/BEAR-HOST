@@ -108,7 +108,6 @@ try{
   },
    AddNewCartProduct: async(cartID, productID)=>{
      try{
-       console.log(cartID,productID,pricepacket)
        const sql = `
        INSERT INTO cart_products(
        CartID,

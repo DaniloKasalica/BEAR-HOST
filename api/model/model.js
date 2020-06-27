@@ -96,7 +96,7 @@ const sql = require("./db.js")
         CartProductID int(11) NOT NULL auto_increment,
         CartID int(11) NOT NULL,
         ProductID int(11)  NOT NULL,
-        PricePacket int(1) NOT NULL,
+        PricePacket int(1),
 		    PRIMARY KEY (CartProductID),
         FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
         FOREIGN KEY (CartID) REFERENCES Cart(CartID)

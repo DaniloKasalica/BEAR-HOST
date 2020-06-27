@@ -6,7 +6,10 @@ const order = {
         try{
      const result = await  orderService.AddNewOrder(req.params.id)
      const orderId = result.insertId
-     await orderService.AddNewOrderProduct(orderId,req.body.productid,req.body.pricepacket)
+     await Promise.all(
+      req.body.products.map(async (elem) => {
+        await orderService.AddNewOrderProduct(orderId,elem.productid,elem.pricepacket)
+    }))
      req.body.orders = await orderService.SelectOrders(orderId)
      res.sendStatus(201)
      const cartID =  (await cartService.FindCartIDByUserID(req.params.id)).cartid

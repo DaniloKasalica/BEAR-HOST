@@ -9,7 +9,7 @@ const product = {
             req.body.products.map(async (elem) => {
                await  productService.UpdateProdByID(eleme.id,elem)
           }))
-    res.status(200).send(req.body)
+    res.status(201).send(req.body)
        }catch(err){
         res.status(400).send({error: err.message})
        }
