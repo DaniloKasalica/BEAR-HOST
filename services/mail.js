@@ -83,9 +83,9 @@ class mailOptionsobjNewOrder {
 class mailOptionsobjContact{
   constructor(doc,email){
     this.to = email;
-    this.html =`${doc.comment} ` ;
+    this.html =`<h1>Korisnik ${doc.name} </h1> <p>${doc.message} </p>` ;
     this.from = doc.email;
-    this.subject = `${doc.firstname}  ${doc.lastname}`
+    this.subject = `${doc.subject}`
 }
 }
  class mailOptionsobjBlocAdmin {
