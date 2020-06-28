@@ -16,28 +16,37 @@ app.use(json());
 app.use('/admin',adminRoutes);
 app.use('/admin/products',productRoutersAdmin);
 app.use('/admin/comments',commentRoutersAdmin)
-
 app.use('/user',userRoutes);
 app.use('/order',orderRouters)
 app.use('/cart',cartRouters)
 app.use('/products',productRoutersUser)
 app.use('/comments',commentRoutersUser)
+
+app.post('/contact',async(req,res)=>{
+    try{
+         await sendmail.contact(req.body)
+         res.sendStatus(200)
+    }catch(err){
+        res.sendStatus(400)
+    }
+})
 app.post('/order/:CartID', async(req,res)=>{
     try{
-        console.log(req.body.orders)
+        res.sendStatus(200)
         const result = await sendmail.newprodinfo(req.body.orders)
+
     }catch(err){
         console.log(err)
     }
 })
-/*app.post('/user/signup',async(req,res)=>{
+app.post('/user/signup',async(req,res)=>{
     try{
         const result = await sendmail.blockUser(req.body.email, req.body.url,req.body.firstname)
 
     }catch(err){
         console.log(err)
     }
-})*/
+})
 app.post('/admin/login', async(req,res)=>{
     
     if(req.body.blockAdmin === process.env.BLOCK_SECRET){

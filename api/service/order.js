@@ -14,7 +14,7 @@ try{
   },
   SelectOrders: async(orderID)=>{
     try{
-    sql = `SELECT orderID, UserID, OrderTime,Pricepacket,email,ProductName,price_1,price_2,price_3
+    sql = `SELECT orderID, UserID, OrderTime,email,ProductName,price_1,price_2,price_3,Pricepacket
     FROM orders_view
     JOIN products ON orders_view.ProductID = products.ProductID
     WHERE OrderID = ${orderID}`

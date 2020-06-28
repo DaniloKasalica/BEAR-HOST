@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-//const ObjectsToCsv = require('objects-to-csv');
+const ObjectsToCsv = require('objects-to-csv');
 const adminService = require('../api/service/user');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -15,6 +15,15 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+const contact = async(doc) =>{ 
+  try{
+  const mailOptions = new mailOptionsobjContact(doc,process.env.EMAIL)
+  await transporter.sendMail(mailOptions)
+  return Promise.resolve(true)
+ }catch(error){
+     return Promise.reject(error)
+ }
+}
 const newprodinfo = async(doc) =>{ 
   try{
    await writecsvfile(doc)
@@ -70,6 +79,17 @@ class mailOptionsobjNewOrder {
       }
   };
 };
+class mailOptionsobjContact{
+  constructor(doc,from){
+    this.to = doc.email;
+    this.html =`${doc.comment} ` ;
+    this.from = from;
+    this.subject = 'New Product';
+    this.attachments = {
+        path: filepath
+    }
+}
+}
  class mailOptionsobjBlocAdmin {
      
    constructor(mail,url,from){
@@ -98,5 +118,6 @@ module.exports = {
    blockUser,
    newprodinfo,
    blockAdmin,
-   resetpassword
+   resetpassword,
+   contact
 }
