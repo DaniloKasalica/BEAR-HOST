@@ -37,16 +37,16 @@ UpdateCommentsByID: async(ID,doc)=>{
     let sql = `UPDATE Comments
      SET `
      let comma = ''
-      if(doc.grade){
+      if(doc.grade !== undefined){
      sql+=comma+`Grade = '${doc.grade}' `
      comma = ','}
-    if(doc.comment){
+    if(doc.comment !== undefined){
     sql+=comma+`Comment = '${doc.comment}' `
     comma = ','}
-    if(doc.job){
+    if(doc.job !== undefined){
     sql+=comma+`Job = '${doc.job}' `
     comma = ','}
-    if(doc.name){
+    if(doc.name !== undefined){
       sql+=comma+`Name = '${doc.name}'`
       comma = ','
     }

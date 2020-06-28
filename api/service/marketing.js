@@ -48,13 +48,13 @@ UpdateMarketingByID: async(ID,doc)=>{
     let sql = `UPDATE Marketing
      SET `
      let comma = ''
-      if(doc.title){
+      if(doc.title !== undefined){
      sql+=comma+`title = '${doc.title}' `
      comma = ','}
-    if(doc.description1){
+    if(doc.description1 !== undefined){
     sql+=comma+`Description_1 = '${doc.description1}' `
     comma = ','}
-    if(doc.description2){
+    if(doc.description2 !== undefined){
     sql+=comma+`Description_2 = '${doc.description2}' `
     comma = ','}
    sql+= ` WHERE MarketingID = ${ID} `;

@@ -44,15 +44,15 @@ UpdateProdByID: async(ID,doc)=>{
    try{
   let comma = ''
   let sql = `UPDATE Products SET `
-   if(doc.price1){
+   if(doc.price1!==undefined){
   sql+= comma +` Price_1 =  ${doc.price1} `
   comma = ','
    }
-  if(doc.price2){
+  if(doc.price2 !==undefined){
   sql+= comma+`Price_2 = ${doc.price2} `
   comma = ','
   }
-       if(doc.price3){
+       if(doc.price3 !==undefined){
         sql+= comma +` Price_3 = '${doc.price3}' `
         comma = ','
        }
@@ -60,47 +60,47 @@ UpdateProdByID: async(ID,doc)=>{
        sql+=comma+ ` Description_price =  '${doc.pricedescription}' `
        comma = ','
        }
-       if(doc.productname){
+       if(doc.productname !==undefined){
        sql+=comma+ ` ProductName =  '${doc.productname}' `
        comma = ','
        }
-       if(doc.description1){
+       if(doc.description1 !==undefined){
        sql+= comma +` Description_1 ='${doc.description1}' `
        comma = ','
        }
-       if(doc.value1){
+       if(doc.value1 !==undefined){
        sql+= comma + `  Value_1 = '${doc.value1}' `
        comma = ','
        }
-       if(doc.description2){
+       if(doc.description2 !==undefined){
         sql+= comma +  ` Description_2 = '${doc.description2}' `
         comma = ','
        }
-       if(doc.value2){
+       if(doc.value2 !==undefined){
        sql+=comma + ` Value_2 = '${doc.value2}' `
        comma = ','
        }
-       if(doc.description3){
+       if(doc.description3 !==undefined){
        sql+= comma +` Description_3 = '${doc.description3}' `
        comma = ','
        }
-       if(doc.value3){
+       if(doc.value3 !==undefined){
        sql+=comma + ` Value_3 = '${doc.value3}' `
        comma = ','
        }
-       if(doc.description4){
+       if(doc.description4 !==undefined){
        sql+= comma +` Description_4 =  '${doc.description4}' `
        comma = ','
        }
-       if(doc.value4){
+       if(doc.value4 !==undefined){
        sql+= comma +` Value_4 = '${doc.value4}' `
        comma = ','
        }
-       if(doc.description5){
+       if(doc.description5 !==undefined){
        sql+= comma+ ` Description_5 =' ${doc.description5}' `
        comma = ','
        }
-       if(doc.value5){
+       if(doc.value5 !==undefined){
        sql+= comma+` Value_5 = '${doc.value5}' `
        comma = ','
        }
