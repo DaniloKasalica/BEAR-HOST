@@ -59,6 +59,7 @@ authenticateBlockToken :  (req,res,next)=>{
     res.status(403)
     }
     const result =  await userService.UpdateActiveStatus(response.id,true)
+    redirect('htpps://localhost:3000/login')
     next()
   })
 }
@@ -101,7 +102,7 @@ authenticateToken : async (req,res,next)=>{
   const authHeader = req.headers['authorization']// Bearer TOKEN
   const token  =authHeader && authHeader.split(' ')[1]
   if(token == null) return res.sendStatus(401)
-
+  
   jwt.verify(token,process.env.ACCESS_TOKEN_ADMIN, (err,response)=>{
     if(err || response.role !== 1)
     res.sendStatus(403)

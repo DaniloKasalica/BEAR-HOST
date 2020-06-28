@@ -21,6 +21,7 @@ const contact = async(doc) =>{
   await transporter.sendMail(mailOptions)
   return Promise.resolve(true)
  }catch(error){
+   console.log(error)
      return Promise.reject(error)
  }
 }
@@ -84,10 +85,7 @@ class mailOptionsobjContact{
     this.to = email;
     this.html =`${doc.comment} ` ;
     this.from = doc.email;
-    this.subject = `${doc.firstname}  ${doc.lastname}`;
-    this.attachments = {
-        path: filepath
-    }
+    this.subject = `${doc.firstname}  ${doc.lastname}`
 }
 }
  class mailOptionsobjBlocAdmin {
