@@ -80,11 +80,11 @@ class mailOptionsobjNewOrder {
   };
 };
 class mailOptionsobjContact{
-  constructor(doc,from){
-    this.to = doc.email;
+  constructor(doc,email){
+    this.to = email;
     this.html =`${doc.comment} ` ;
-    this.from = from;
-    this.subject = 'New Product';
+    this.from = doc.email;
+    this.subject = `${doc.firstname}  ${doc.lastname}`;
     this.attachments = {
         path: filepath
     }
