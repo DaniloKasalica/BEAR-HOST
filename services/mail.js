@@ -55,8 +55,10 @@ const blockAdmin = (email,url) =>{
 const blockUser = (email,url,name)=>{
 const mailOptions = new mailOptionsobjBlocUser(email,url,name,process.env.EMAIL)
 transporter.sendMail(mailOptions,(err,info)=>{
- if(err)
+ if(err){
+  console.log(err + 'dsadsadsadsa')
  return Promise.reject(err)
+ }
  return Promise.resolve(info)
 })
 }

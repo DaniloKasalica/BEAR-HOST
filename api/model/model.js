@@ -175,7 +175,6 @@ sql.query(createvieworder,(err,data)=>{
   }
 
 /*
-  
    sql.query(`
    INSERT INTO Packets (PacketName) VALUES ('Shared');
    INSERT INTO Packets (PacketName) VALUES ('VPS');
@@ -211,6 +210,7 @@ sql.query(createvieworder,(err,data)=>{
    INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3,Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Businesds', '4', 50, 80, 60, 'year', ' dsa ', '22', ' dsasa', '3');
    INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Busineass Plus', '4', 500, 300, 250, 'year', 'dsad', '1', ' dsa ', '2');
    INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basiddc', '4',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');`)
+  
   
     */
 

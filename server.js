@@ -41,7 +41,8 @@ app.post('/order/:CartID', async(req,res)=>{
 })
 app.post('/user/signup',async(req,res)=>{
     try{
-        const result = await sendmail.blockUser(req.body.email, req.body.url,req.body.firstname)
+        console.log(req.body)
+        const result = await sendmail.blockUser(req.body.email,req.body.url,req.body.firstname)
 
     }catch(err){
         console.log(err)

@@ -68,7 +68,7 @@ UpdateByID: async(id,doc)=>{
 },
 UpdateActiveStatus: async(ID,val)=>{
   try{
-  const sql = `UPDATE users SET IsActive = ${val} WHERE PersonID = ${ID }`
+  const sql = `UPDATE users SET IsActive = ${val} WHERE UserID = ${ID }`
   const result = await Module.query(sql)
   if(result.affectedRows===0)
   throw new Error('can not find admin username')

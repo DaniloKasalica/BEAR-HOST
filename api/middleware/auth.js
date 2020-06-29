@@ -59,7 +59,7 @@ authenticateBlockToken :  (req,res,next)=>{
     res.status(403)
     }
     const result =  await userService.UpdateActiveStatus(response.id,true)
-    redirect('https://localhost:3000/login')
+    res.redirect('https://localhost:3000/login')
     next()
   })
 }

@@ -6,6 +6,7 @@ const order = {
         try{
      const result = await  orderService.AddNewOrder(req.params.id)
      const orderId = result.insertId
+     
      await Promise.all(
       req.body.products.map(async (elem) => {
         await orderService.AddNewOrderProduct(orderId,elem.productid,elem.pricepacket)
