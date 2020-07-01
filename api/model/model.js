@@ -102,14 +102,15 @@ const sql = require("./db.js")
         FOREIGN KEY (CartID) REFERENCES Cart(CartID)
       )`
 
-
-      const createvieworder = `CREATE VIEW  Orders_View
+/*
+      const createvieworder = `CREATE VIEW Orders_View
       AS
       SELECT orders.OrderID,orders.UserID,OrderTime,ProductID,Pricepacket,email
       FROM Orders 
       JOIN order_products ON orders.OrderID = order_products.OrderID
       JOIN users ON orders.UserID = users.UserID
       `
+      */
       sql.query(createtablepacket,(err,data)=>{
         if(err){
           console.log(err)
@@ -153,15 +154,20 @@ sql.query( createtableproductcart , (err,data)=>{
  console.log(err)
 })
 
+/*
 sql.query(createvieworder,(err,data)=>{
   if(err){
     console.log(err)
   }
 })
-  /*sql.query(createvieworder,(err,data)=>{
-    if(err)
-    console.log(err)
-  })*/
+      const createvieworder = `CREATE VIEW Orders_View
+      AS
+      SELECT orders.OrderID,orders.UserID,OrderTime,ProductID,Pricepacket,email
+      FROM Orders 
+      JOIN order_products ON orders.OrderID = order_products.OrderID
+      JOIN users ON orders.UserID = users.UserID
+      `
+      */
   
  const  Module = {}
   Module.query = ( query,args ) => {

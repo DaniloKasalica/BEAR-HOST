@@ -10,12 +10,25 @@ const orderRouters = require('./api/routes/order')
 const productRoutersUser = require('./api/routes/productuser')
 const cartRouters = require('./api/routes/cart')
 const app = express()
+const cors = require('cors')
 app.use(urlencoded({ extended: true }));
 app.use(json());
 
-app.use('/admin',adminRoutes);
-app.use('/admin/products',productRoutersAdmin);
-app.use('/admin/comments',commentRoutersAdmin)
+//ovo stavi u komentar ako ne radi
+app.use(cors)
+admin.use(cors)
+
+const admin = express()
+admin.use(urlencoded({ extended: true }));
+admin.use(json());
+admin.use('/admin',adminRoutes);
+admin.use('/admin/products',productRoutersAdmin);
+admin.use('/admin/comments',commentRoutersAdmin)
+
+
+
+
+
 app.use('/user',userRoutes);
 app.use('/order',orderRouters)
 app.use('/cart',cartRouters)
@@ -30,9 +43,8 @@ app.post('/contact',async(req,res)=>{
         res.sendStatus(400)
     }
 })
-app.post('/order/:CartID', async(req,res)=>{
+app.post('/order', async(req,res)=>{
     try{
-        res.sendStatus(200)
         const result = await sendmail.newprodinfo(req.body.orders)
 
     }catch(err){
@@ -48,7 +60,7 @@ app.post('/user/signup',async(req,res)=>{
         console.log(err)
     }
 })
-app.post('/admin/login', async(req,res)=>{
+admin.post('/admin/login', async(req,res)=>{
     
     if(req.body.blockAdmin === process.env.BLOCK_SECRET){
         try{
@@ -66,5 +78,6 @@ app.post('/security/password', async(req,res)=>{
     }
 })
 
-app.listen(3000);
+app.listen(3001)
+admin.listen(3002)
 

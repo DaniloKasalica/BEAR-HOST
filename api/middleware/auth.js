@@ -8,8 +8,8 @@ const authuser = {
 encpassword : async function (req,res,next){
     try {
       if(req.body.password){
-    const password = await bcrypt.hash(req.body.password, 10);
-    req.body.password = password;
+    const password = await bcrypt.hash(req.body.password, 10)
+    req.body.password = password
     next()
       }else{
       next()
@@ -21,10 +21,18 @@ encpassword : async function (req,res,next){
 },
 login : async(req,res,next)=>{
   try{
-  const checkuser =await userService.FindByUsername(req.body.username)
-  if(checkuser == null ){
-   return res.status(400).send({error: 'cannot find user'});
-  }
+    let checkuser 
+     if(req.body.username)  {
+       checkuser =await userService.FindByUsername(req.body.username)
+
+    }
+    else  if(req.body.email){
+      let checkuser = await userService.FindByEmail(req.body.email)
+    }
+
+    if(checkuser == null ){
+        return res.status(400).send({error: 'cannot find user'});
+       }
   if(checkuser.IsActive==false)
   return res.status(403).send({error: 'User status false'})
          req.body.id = checkuser.UserID;
@@ -46,7 +54,7 @@ authenticateToken : async (req,res,next)=>{
 
   jwt.verify(token,process.env.ACCESS_TOKEN_USER, (err,response)=>{
     if(err)
-    res.sendStatus(403)
+    res.sendStatus(401)/3
     req.params.id = response.id;
     next()
   })
@@ -67,7 +75,15 @@ authenticateBlockToken :  (req,res,next)=>{
 const authadmin = {
   login : async(req,res,next)=>{
   try{
-  const checkuser =await userService.FindByUsername(req.body.username)
+    let checkuser 
+     if(req.body.username)  {
+      console.log(true)
+       checkuser =await userService.FindByUsername(req.body.username)
+    }
+    else  if(req.body.email){
+       checkuser = await userService.FindByEmail(req.body.email)
+    }
+
   if(checkuser == null)
    res.status(400).send({error: 'cannot find user'});
   if(checkuser.Role !==1)
@@ -105,7 +121,7 @@ authenticateToken : async (req,res,next)=>{
   
   jwt.verify(token,process.env.ACCESS_TOKEN_ADMIN, (err,response)=>{
     if(err || response.role !== 1)
-    res.sendStatus(403)
+    res.sendStatus(401)
     req.params.id = response.id;
     next()
   })

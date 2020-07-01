@@ -6,7 +6,7 @@ const product = {
    UpdateProduct: async(req,res)=>{
        try{
          await Promise.all(
-            req.body.products.map(async (elem) => {
+            req.body.products.map( async (elem) => {
                await  productService.UpdateProdByID(elem.id,elem)
           }))
     res.status(201).send(req.body)
