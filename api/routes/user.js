@@ -9,15 +9,18 @@ const auth  = require('../middleware/auth').authuser;
 const productController = require('../controller/productuser')
 const cartController = require('../controller/cart')
 
+//user
 router.post('/signup',validation.newuser , auth.encpassword, userController.AddUser,cartController.AddNewCart);
-router.get('/security/:token',auth.authenticateBlockToken) //usmjeriti na log in stranicu ili automatski ulogovati
+router.get('/security/:token',auth.authenticateBlockToken) 
 
 router.post('/login',auth.login,userController.login)
 router.post('/token',userController.refreshToken)
 router.post('/logout', userController.logout)
 
-router.put('/setings/update',auth.authenticateToken,validation.updateuser, auth.encpassword,userController.UpdateUser)
-router.put('/security/password',userController.RessetPassword)
+router.put('/settings',auth.authenticateToken,validation.updateuser, auth.encpassword,userController.UpdateUser)
+
+router.post('/security/resetpassword',validation.password,auth.authenticateResetPasswordToken,auth.encpassword,userController.RessetPassword)
+router.post('/security/password',userController.RessetPasswordRequest)
 
 //router.get('/products/:marketingname',productController.FindProductsByMarketingName)
 //router.get('/marketingproducts',productController.FindMarketingProducts)

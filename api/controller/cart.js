@@ -10,6 +10,16 @@ const cart = {
         }
         
     },
+    GetProdNumInCart: async(req,res)=>{
+      try{
+         const CartID  = (await cartService.FindCartIDByUserID(req.params.id)).cartid
+      const result  =   (await cartService.FindNumberOfProductsByCartID(CartID)).number
+         res.send({number: result})
+      }
+      catch(err){
+         res.sendStatus(400)
+      }
+   },
     RemoveFromCart: async(req,res)=>{
        try{
          const CartID  = (await cartService.FindCartIDByUserID(req.params.id)).cartid

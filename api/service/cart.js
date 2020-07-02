@@ -109,6 +109,17 @@ try{
     }
 
   },
+  FindNumberOfProductsByCartID: async(cartID)=>{
+    try{
+      sql = `SELECT count(CartProductID)  as number
+      FROM cart_products
+      WHERE Cart_products.CartID = ${cartID}`
+      const result = await Module.query(sql)
+      return Promise.resolve(result[0])
+      }catch(err){
+        return Promise.reject(err)
+      }
+  },
   FindCartIDByUserID: async(userID)=>{
     try{
       sql = `SELECT CartID as cartid

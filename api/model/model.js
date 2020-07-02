@@ -52,6 +52,7 @@ const sql = require("./db.js")
       Value_4 varchar(255),
       Description_5 varchar(255),
       Value_5 varchar(255),
+      Visible BOOLEAN DEFAULT true,
       PRIMARY KEY (ProductID),
       FOREIGN KEY (PacketID) REFERENCES Packets (PacketID)
     );`
@@ -154,19 +155,19 @@ sql.query( createtableproductcart , (err,data)=>{
  console.log(err)
 })
 
-/*
+const createvieworder = `CREATE VIEW Orders_View
+AS
+SELECT orders.OrderID,orders.UserID,OrderTime,ProductID,Pricepacket,email
+FROM Orders 
+JOIN order_products ON orders.OrderID = order_products.OrderID
+JOIN users ON orders.UserID = users.UserID`
 sql.query(createvieworder,(err,data)=>{
   if(err){
     console.log(err)
   }
 })
-      const createvieworder = `CREATE VIEW Orders_View
-      AS
-      SELECT orders.OrderID,orders.UserID,OrderTime,ProductID,Pricepacket,email
-      FROM Orders 
-      JOIN order_products ON orders.OrderID = order_products.OrderID
-      JOIN users ON orders.UserID = users.UserID
-      `
+      
+      /*
       */
   
  const  Module = {}
@@ -218,8 +219,8 @@ sql.query(createvieworder,(err,data)=>{
    INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basiddc', '4',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');`)
   
   
+
+
     */
-
-
 
 module.exports = Module;

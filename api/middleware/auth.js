@@ -26,8 +26,8 @@ login : async(req,res,next)=>{
        checkuser =await userService.FindByUsername(req.body.username)
 
     }
-    else  if(req.body.email){
-      let checkuser = await userService.FindByEmail(req.body.email)
+    else if(req.body.email){
+       checkuser = await userService.FindByEmail(req.body.email)
     }
 
     if(checkuser == null ){
@@ -59,6 +59,17 @@ authenticateToken : async (req,res,next)=>{
     next()
   })
 },
+authenticateResetPasswordToken:  (req,res,next)=>{
+  const token = req.body.token// Bearer TOKEN
+  if(token == null) return res.sendStatus(401)
+  jwt.verify(token,process.env.RESET_PASSWORD_TOKEN, async (err,response)=>{
+    if(err){
+    res.sendStatus(403)
+    }
+    req.params.id = response.id
+    next()
+  })
+},
 authenticateBlockToken :  (req,res,next)=>{
   const token = req.params.token// Bearer TOKEN
   if(token == null) return res.sendStatus(400)
@@ -77,10 +88,9 @@ const authadmin = {
   try{
     let checkuser 
      if(req.body.username)  {
-      console.log(true)
        checkuser =await userService.FindByUsername(req.body.username)
     }
-    else  if(req.body.email){
+    else if(req.body.email){
        checkuser = await userService.FindByEmail(req.body.email)
     }
 

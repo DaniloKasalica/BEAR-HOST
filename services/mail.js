@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const ObjectsToCsv = require('objects-to-csv');
 const adminService = require('../api/service/user');
+const { FindByEmail } = require('../api/service/user');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -86,7 +87,7 @@ class mailOptionsobjContact{
   constructor(doc,email){
     this.to = email;
     this.html =`<h1>Korisnik ${doc.name} </h1> <p>${doc.message} </p>` ;
-    this.from = doc.email;
+    this.from = ` ${doc.email} <${email}>`;
     this.subject = `${doc.subject}`
 }
 }

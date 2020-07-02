@@ -15,10 +15,10 @@ app.use(urlencoded({ extended: true }));
 app.use(json());
 
 //ovo stavi u komentar ako ne radi
-app.use(cors)
-admin.use(cors)
+app.use(cors())
 
 const admin = express()
+admin.use(cors())
 admin.use(urlencoded({ extended: true }));
 admin.use(json());
 admin.use('/admin',adminRoutes);
@@ -53,7 +53,6 @@ app.post('/order', async(req,res)=>{
 })
 app.post('/user/signup',async(req,res)=>{
     try{
-        console.log(req.body)
         const result = await sendmail.blockUser(req.body.email,req.body.url,req.body.firstname)
 
     }catch(err){
@@ -70,9 +69,10 @@ admin.post('/admin/login', async(req,res)=>{
         }
     }
 })
-app.post('/security/password', async(req,res)=>{
+app.post('/user/security/password', async(req,res)=>{
     try{
         const result = await sendmail.resetpassword(req.body.email,req.body.url)
+        res.sendStatus(200)
     }catch(err){
         console.log(err)
     }

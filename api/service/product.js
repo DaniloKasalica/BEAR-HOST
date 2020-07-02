@@ -28,9 +28,9 @@ try{
 
 DeleteProductByID : async(ID)=>{ 
    try{
-  const sql = `DELETE FROM Products
-  WHERE ProductID =${ID}`
-  console.log(sql)
+  const sql = `UPDATE Products 
+  SET visible = false 
+  WHERE ProductID =${ID} `
    const result = await Module.query(sql)
    if(result.affectedRows === 0){
    throw new Error('can not find product')
@@ -148,7 +148,7 @@ FindProductsByPacketID: async(ID)=>{
     Value_4 as value4,
     Description_5 as description5,
     Value_5 as value5
-    FROM Products WHERE ${ID} = PacketID `
+    FROM Products WHERE ${ID} = PacketID AND visible = true`
     const result = await Module.query(sql2)
     return Promise.resolve(result)
 

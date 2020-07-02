@@ -42,6 +42,17 @@ FindByUsername: async(username)=>{
     return Promise.resolve(err)
   }
 },
+UpdatePasswordByID: async(password,id)=>{
+  try{
+    let sql = `UPDATE Users
+     SET password = '${password}'
+     WHERE UserID = ${id}`
+     await Module.query(sql);
+     Promise.resolve(true)
+  }catch(err){
+    return Promise.rejecet(err)
+  }
+},
 UpdateByID: async(id,doc)=>{
   try{
     let sql = `UPDATE Users
@@ -58,6 +69,9 @@ UpdateByID: async(id,doc)=>{
     comma = ','}
     if(doc.password){
     sql+=comma+`password = '${doc.password}'`
+    comma = ','}
+    if(doc.email){
+    sql+=comma+`email = '${doc.email}'`
     comma = ','}
    sql+= ` WHERE UserID = ${id}`;
     const result  = await Module.query(sql);

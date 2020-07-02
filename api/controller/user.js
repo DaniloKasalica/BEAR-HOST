@@ -8,7 +8,7 @@ const user = {
        try{
       const person = await userService.InsertIntoTable(req.body.username,req.body.lastname,false, req.body.firstname, req.body.email, req.body.password);
       blockToken = jwt.sign({id:person.insertId},process.env.BLOCK_TOKEN, { expiresIn: '1d' });
-      req.body.url = `http://localhost:3000/user/security/${blockToken}`
+      req.body.url = `http://localhost:3001/user/security/${blockToken}`
       req.params.id = person.insertId
       res.send({ID: person.insertId})
       next();
@@ -18,7 +18,6 @@ const user = {
     },
     login: async(req,res)=>{
       try{
-        console.log(req.body.id)
       const accesToken = jwt.sign({id:req.body.id},process.env.ACCESS_TOKEN_USER, { expiresIn: '10m' });
       const refreshToken =  jwt.sign({id:req.body.id},process.env.REFRESH_TOKEN_USER)
       const result = await tokenService.InsertIntoTable(refreshToken)
@@ -69,17 +68,27 @@ const user = {
     RessetPasswordRequest: async(req,res,next)=>{
       try{
       const result = await userService.FindByEmail(req.body.email)
-      token =  jwt.sign({id:result.UserID},process.env.REFRESH_TOKEN_USER)
-      const result1 = await tokenService.InsertIntoTable(refreshToken)
-      req.body.url = `http://localhost:3000/user/security/resetpassword/${token}`
+      token=  jwt.sign({id:result.UserID},process.env.REFRESH_TOKEN_USER , { expiresIn: '20m' })
+      await tokenService.InsertIntoTable(token)
+      req.body.url = `http://localhost:3000/security/resetpassword/${token}`
       next()
       }catch(err){
         res.sendStatus(400)
       }
     },
     RessetPassword: async(req,res)=>{
-      const refreshtoken = req.params.tok
+      try{
+        await userService.UpdatePasswordByID(req.body.password,req.params.id)
+        const accesToken = jwt.sign({id:req.body.id},process.env.ACCESS_TOKEN_USER, { expiresIn: '10m' });
+        const refreshToken =  jwt.sign({id:req.body.id},process.env.REFRESH_TOKEN_USER)
+         await tokenService.InsertIntoTable(refreshToken)
+        res.send({
+          accesToken:accesToken,
+          refreshToken: refreshToken
+          })
+        }catch(err){
+          res.status(400).send({error:err.message})
+        }
+      }
     }
-    
-}
 module.exports = user;

@@ -1,7 +1,7 @@
 const userService = require('../service/user')
 const user = {
      newuser : async (req,res,next) =>{
-            Promise.all([
+        Promise.all([
             passval(req.body.password),
             firstnameval(req.body.firstname),
             lastnameval(req.body.lastname),
@@ -14,9 +14,17 @@ const user = {
             res.status(400).send({error: err.message})
         })
     },
+    password: async(req,res,next)=>{
+        try{
+        await passval(req.body.password)
+        next()
+        }catch(err){
+            res.status(400).send({error:err.message})
+        }
+    },
     updateuser: async(req,res,next) =>{
         try{
-        if(req.body.password){+
+        if(req.body.password){
          await passval(req.body.password)
         }
         if(req.body.username){
