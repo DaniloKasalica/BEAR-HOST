@@ -16,7 +16,7 @@ try{
 },
 FindByInsertId: async(insertId)=>{
   try{
-    const sql = `SELECT * FROM Users WHERE ${insertId} = PersonID`
+    const sql = `SELECT * FROM Users WHERE ${insertId} = UserID`
     const result = await Module.query(sql)
     return Promise.resolve(result[0])
   }catch(err){

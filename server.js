@@ -1,10 +1,14 @@
 const express = require('express');
 const { json, urlencoded } = require('body-parser')
-const userRoutes = require('./api/routes/user')
-const adminRoutes = require('./api/routes/admin')
 const sendmail  = require('./services/mail')
+
+const adminRoutes = require('./api/routes/admin')
 const productRoutersAdmin  = require('./api/routes/productsadmin')
 const commentRoutersAdmin = require('./api/routes/commentsadmin.js')
+const orderRoutersAdmin = require('./api/routes/orderadmin')
+
+
+const userRoutes = require('./api/routes/user')
 const commentRoutersUser = require('./api/routes/commentsuser')
 const orderRouters = require('./api/routes/order')
 const productRoutersUser = require('./api/routes/productuser')
@@ -59,6 +63,17 @@ app.post('/user/signup',async(req,res)=>{
         console.log(err)
     }
 })
+app.post('/user/security/password', async(req,res)=>{
+    try{
+        const result = await sendmail.resetpassword(req.body.email,req.body.url)
+        res.sendStatus(200)
+    }catch(err){
+        console.log(err)
+    }
+})
+
+
+
 admin.post('/admin/login', async(req,res)=>{
     
     if(req.body.blockAdmin === process.env.BLOCK_SECRET){
@@ -69,15 +84,8 @@ admin.post('/admin/login', async(req,res)=>{
         }
     }
 })
-app.post('/user/security/password', async(req,res)=>{
-    try{
-        const result = await sendmail.resetpassword(req.body.email,req.body.url)
-        res.sendStatus(200)
-    }catch(err){
-        console.log(err)
-    }
-})
+
+
 
 app.listen(3001)
 admin.listen(3002)
-

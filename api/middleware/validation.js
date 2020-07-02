@@ -1,4 +1,5 @@
 const userService = require('../service/user')
+const bcrypt = require('bcrypt');
 const user = {
      newuser : async (req,res,next) =>{
         Promise.all([
@@ -24,9 +25,18 @@ const user = {
     },
     updateuser: async(req,res,next) =>{
         try{
-        if(req.body.password){
+            if(req.body.password && req.body.oldpassword){
+         const user = await userService.FindByInsertId(req.params.id)
+         const resp = await bcrypt.compare(req.body.oldpassword, user.Password);
+         if(resp){
          await passval(req.body.password)
+         console.log(resp)
+         }
+         else{
+             throw new Error('incorect password')
+         }
         }
+    
         if(req.body.username){
         await usernameval(req.body.username)
         }

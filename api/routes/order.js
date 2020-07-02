@@ -5,6 +5,6 @@ const auth  = require('../middleware/auth').authuser;
 
 //router.post('/',auth.authenticateToken,orderController.AddNewOrder)
 router.post('/',auth.authenticateToken,orderController.AddNewOrder)
-
+router.get('/')
 
 module.exports = router

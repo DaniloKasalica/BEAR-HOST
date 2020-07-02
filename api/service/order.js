@@ -12,7 +12,31 @@ try{
      return Promise.reject(err)
    }
   },
-  SelectOrders: async(orderID)=>{
+  ChangeStatusByOrderID: async(orderID,status) =>{
+    try{
+      sql =  `UPDATE Orders 
+  SET Status = ${status} 
+  WHERE OrderID =${orderID} ` 
+  const result = await Module.query(sql)
+  return Promise.resolve(result)
+  }catch(err){
+    return Promise.reject(err)
+  }
+  },
+  FindAllOrders: async()=>{
+    try{
+      sql = `SELECT orderID, OrderTime,Email,orders.Status
+      FROM orders
+      JOIN users ON orders.UserID = users.UserID`
+      const result = await Module.query(sql)
+      return Promise.resolve(result)
+      }catch(err){
+        return Promise.reject(err)
+      }
+  
+  },
+
+  FindUserOrdersByOrderID: async(orderID)=>{
     try{
     sql = `SELECT orderID, UserID, OrderTime,email,ProductName,price_1,price_2,price_3,Pricepacket
     FROM orders_view

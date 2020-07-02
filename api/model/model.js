@@ -72,6 +72,7 @@ const sql = require("./db.js")
     const createtableorder = `CREATE TABLE IF NOT EXISTS Orders(
         OrderID int(11) NOT NULL auto_increment,
         UserID int(11),
+        Status varchar(10) DEFAULT 'Pending',
         OrderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (OrderID),
         FOREIGN KEY (UserID) REFERENCES Users(UserID)
@@ -219,8 +220,8 @@ sql.query(createvieworder,(err,data)=>{
    INSERT INTO Products (ProductName, PacketID, Price_1, Price_2, Price_3, Description_price, Description_1, Value_1, Description_2, Value_2) VALUES ('Basiddc', '4',80, 70, 40, 'year', 'dsadas', '3', 'asdsad sad ', '3');`)
   
   
-
-
     */
+
+
 
 module.exports = Module;
