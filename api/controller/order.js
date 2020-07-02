@@ -11,7 +11,7 @@ const order = {
       req.body.products.map(async (elem) => {
         await orderService.AddNewOrderProduct(orderId,elem.productid,elem.pricepacket)
     }))
-     req.body.orders = await orderService.FindUserOrdersByOrderID(orderId)
+     req.body.orders = await orderService.FindUserOrderProductsByOrderID(orderId)
      res.sendStatus(201)
      const cartID =  (await cartService.FindCartIDByUserID(req.params.id)).cartid
      await cartService.RemoveAllCart_productsByCartID(cartID)
@@ -21,6 +21,15 @@ const order = {
         }
         
     },
+    GetUserOrders: async(req,res,next)=>{
+      try{
+   orders = await orderService.FindUserOrdersByUserID(req.params.id)
+   res.status(200).send({orders})
+      }catch(err){
+         return res.status(400).send({error: err})
+      }
+      
+  },
     GetAllOrders: async(req,res,next)=>{
       try{
          const result =  await orderService.FindAllOrders()
@@ -53,7 +62,7 @@ const order = {
       await orderService.AddNewOrderProduct(orderId,elem.productid,elem.pricepacket)
   }))
   await cartService.RemoveAllCart_productsByCartID(cartID)
-  req.body.orders = await orderService.FindUserOrdersByOrderID(orderId)
+  req.body.orders = await orderService.FindUserOrderProductsByOrderID(orderId)
    res.sendStatus(201)
    next()
       }catch(err){
