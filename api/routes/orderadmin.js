@@ -6,5 +6,6 @@ const auth  = require('../middleware/auth').authadmin;
 //admin/orders
 router.put('/',auth.authenticateToken,orderController.ChangeStatus)
 router.get('/',auth.authenticateToken,orderController.GetAllOrders)
+router.get('/:orderid',auth.authenticateToken,orderController.GetOrderProducts)
 
 module.exports = router

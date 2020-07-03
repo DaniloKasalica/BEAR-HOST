@@ -2,24 +2,11 @@ const express = require('express');
 const { json, urlencoded } = require('body-parser')
 const sendmail  = require('./services/mail')
 
+const cors = require('cors')
 const adminRoutes = require('./api/routes/admin')
 const productRoutersAdmin  = require('./api/routes/productsadmin')
 const commentRoutersAdmin = require('./api/routes/commentsadmin.js')
 const orderRoutersAdmin = require('./api/routes/orderadmin')
-
-
-const userRoutes = require('./api/routes/user')
-const commentRoutersUser = require('./api/routes/commentsuser')
-const orderRouters = require('./api/routes/order')
-const productRoutersUser = require('./api/routes/productuser')
-const cartRouters = require('./api/routes/cart')
-const app = express()
-const cors = require('cors')
-app.use(urlencoded({ extended: true }));
-app.use(json());
-
-//ovo stavi u komentar ako ne radi
-app.use(cors())
 
 const admin = express()
 admin.use(cors())
@@ -28,16 +15,33 @@ admin.use(json());
 admin.use('/admin',adminRoutes);
 admin.use('/admin/products',productRoutersAdmin);
 admin.use('/admin/comments',commentRoutersAdmin)
+admin.use('/admin/orders',orderRoutersAdmin)
 
 
 
 
+
+const userRoutes = require('./api/routes/user')
+const commentRoutersUser = require('./api/routes/commentsuser')
+const orderRouters = require('./api/routes/order')
+const productRoutersUser = require('./api/routes/productuser')
+const cartRouters = require('./api/routes/cart')
+const app = express()
+app.use(urlencoded({ extended: true }));
+app.use(json());
+app.use(cors())
 
 app.use('/user',userRoutes);
 app.use('/order',orderRouters)
 app.use('/cart',cartRouters)
 app.use('/products',productRoutersUser)
 app.use('/comments',commentRoutersUser)
+
+
+
+
+
+
 
 app.post('/contact',async(req,res)=>{
     try{

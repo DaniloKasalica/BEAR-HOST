@@ -21,6 +21,24 @@ const order = {
         }
         
     },
+    GetOrderProducts: async(req,res,next)=>{
+      try{
+   orderproducts =await orderService.FindUserOrderProductsByOrderID(req.params.orderid)
+   res.status(200).send({orderproducts})
+      }catch(err){
+         return res.status(400).send({error: err})
+      }
+      
+  },
+    GetUserOrderProducts: async(req,res,next)=>{
+      try{
+   orderproducts = await orderService.FindUserOrderProductsByOrderIDAndUserID(req.params.orderid,req.params.id)
+   res.status(200).send({orderproducts})
+      }catch(err){
+         return res.status(400).send({error: err})
+      }
+      
+  },
     GetUserOrders: async(req,res,next)=>{
       try{
    orders = await orderService.FindUserOrdersByUserID(req.params.id)
@@ -43,7 +61,7 @@ const order = {
       try{
         await Promise.all(
           req.body.orders.map(async (elem) => {
-            await orderService.ChangeStatusByOrderID(elem.orderID,elem.status)
+            await orderService.ChangeStatusByOrderID(elem.orderid,elem.status)
         }))
          res.sendStatus(201)
             }catch(err){

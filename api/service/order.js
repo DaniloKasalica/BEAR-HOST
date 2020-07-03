@@ -14,10 +14,10 @@ try{
   },
   FindUserOrdersByUserID: async(UserID) =>{
     try{
-      
-      sql = `SELECT orderID, OrderTime,Email,orders.Status
+      sql = `SELECT orderID, OrderTime,Email,status
       FROM orders
-      JOIN users ON orders.UserID = ${UserID}`
+      JOIN users ON orders.UserID = users.UserID
+      WHERE users.UserID =  ${UserID}`
   const result = await Module.query(sql)
   return Promise.resolve(result)
   }catch(err){
@@ -26,9 +26,10 @@ try{
   },
   ChangeStatusByOrderID: async(orderID,status) =>{
     try{
-      sql =  `UPDATE Orders 
-  SET Status = ${status} 
-  WHERE OrderID =${orderID} ` 
+  sql =  `UPDATE Orders 
+  SET Status = '${status}' 
+  WHERE OrderID =${orderID} `
+  console.log(sql)
   const result = await Module.query(sql)
   return Promise.resolve(result)
   }catch(err){
@@ -54,6 +55,19 @@ try{
     FROM orders_view
     JOIN products ON orders_view.ProductID = products.ProductID
     WHERE OrderID = ${orderID}`
+    const result = await Module.query(sql)
+    return Promise.resolve(result)
+    }catch(err){
+      return Promise.reject(err)
+    }
+
+  },
+  FindUserOrderProductsByOrderIDAndUserID:  async(orderID,userID)=>{
+    try{
+    sql = `SELECT OrderID, OrderTime,email,ProductName,price_1,price_2,price_3,Pricepacket
+    FROM orders_view
+    JOIN products ON orders_view.ProductID = products.ProductID
+    WHERE OrderID = ${orderID} AND orders_view.UserID = ${userID}`
     const result = await Module.query(sql)
     return Promise.resolve(result)
     }catch(err){
